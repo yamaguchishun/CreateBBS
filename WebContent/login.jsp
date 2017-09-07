@@ -31,6 +31,7 @@
 		<input type="submit" value="ログイン" /> <br />
 	</form>
 	<div class="copyright">Copyright(c)yamaguchi shun</div>
+	<c:remove var="user" scope="session"/>
 </div>
 </body>
 </html>

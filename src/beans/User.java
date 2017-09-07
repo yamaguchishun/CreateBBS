@@ -9,11 +9,10 @@ public class User implements Serializable {
 	private int id;
 	private String account;
 	private String name;
-	private String branch;
 	private int branchID;
-	private String password;
 	private int divisionID;
-	private String divisionName;
+	private String password;
+	private int isWorking;
 	private Date insertDate;
 	private Date updateDate;
 
@@ -21,7 +20,7 @@ public class User implements Serializable {
 		return id;
 	}
 
-	public void setID(int id){
+	public void setId(int id){
 		this.id = id;
 	}
 
@@ -41,22 +40,13 @@ public class User implements Serializable {
 		this.name = name;
 	}
 
-	public int getBranchID(){
+	public int getBranchId(){
 		return branchID;
 	}
 
-	public void setBranchID(int branchID){
+	public void setBranchId(int branchID){
 		this.branchID = branchID;
 	}
-
-	public String getBranchName(){
-		return branch;
-	}
-
-	public void setBranchName(String email){
-		this.branch = email;
-	}
-
 
 	public String getPassword(){
 		return password;
@@ -66,21 +56,20 @@ public class User implements Serializable {
 		this.password = password;
 	}
 
-	public int getDivisionID(){
+	public int getDivisionId(){
 		return divisionID;
 	}
 
-	public void setDivisionID(int divisionID){
+	public void setDivisionId(int divisionID){
 		this.divisionID = divisionID;
 	}
 
-
-	public String getDivisionName(){
-		return divisionName;
+	public int getIsWorking(){
+		return isWorking;
 	}
 
-	public void setDivisionName(String divisionName){
-		this.divisionName = divisionName;
+	public void setIsWorking(int isworking){
+		this.isWorking = isworking;
 	}
 
 	public Date getInsertDate(){

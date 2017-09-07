@@ -1,6 +1,7 @@
 package controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -9,7 +10,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import beans.Branch;
+import beans.Division;
 import beans.User;
+import service.BranchService;
+import service.DivisionService;
 import service.UserService;
 
 @WebServlet(urlPatterns = { "/management" })
@@ -20,13 +25,24 @@ public class ManagementServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws IOException, ServletException {
 
+//		HttpSession session = request.getSession();
+		User sessionUser = (User) request.getSession().getAttribute("user") ;
 		List<User> users = new UserService().getUser();
-		request.setAttribute("users", users);
-		request.getRequestDispatcher("/management.jsp").forward(request, response);
+		List<String> messages = new ArrayList<String>();
+		List<Branch> branches = new BranchService().getBranch();
+		List<Division> divisions = new DivisionService().getDivision();
+
+		if(sessionUser.getDivisionId()==2){
+			request.setAttribute("sessionUser", sessionUser);
+			request.setAttribute("users", users);
+			request.setAttribute("branches", branches);
+			request.setAttribute("divisions", divisions);
+			request.getRequestDispatcher("/management.jsp").forward(request, response);
+		}else{
+			messages.add("アクセスエラー");
+			request.setAttribute("errormanagements", messages);
+			response.sendRedirect("index");
+		}
 	}
 
-	/*@Override
-	protected void doPost(HttpServletRequest request,
-			HttpServletResponse response) throws IOException, ServletException {
-	}*/
 }

@@ -26,19 +26,30 @@
 	<label for="name">名前</label>
 	<input name="name" value="${newUser.name}" id="name"/><br />
 
-	<label for="account">アカウント名</label>
+	<label for="account">ログインID</label>
 	<input name="account" value="${newUser.account}" id="account" /><br />
 
 	<label for="password">パスワード</label>
 	<input name="password" type="password" id="password"/> <br />
 
-	<label for="branch">支店名</label>
-	<input name="branch" value="${newUser.branch}" id="branch"/> <br />
+	<label for="password">パスワード(確認用)</label>
+	<input name="confirmation" type="password" id="confirmation"/> <br />
 
-	<label for="division">部署</label>
-	<input name="division" value="${newUser.division}" id="division"/> <br />
+	<label for="division">部署名</label>
+		<select name="division">
+			<c:forEach items="${divisions}" var="division">
+				<option value="${division.id}">${division.name}</option>
+			</c:forEach>
+		</select><br />
+
+	<label for="branch">支社名</label>
+		<select name="branch">
+			<c:forEach items="${branches}" var="branch">
+				<option value="${branch.id}">${branch.name}</option>
+			</c:forEach>
+	</select><br />
 	<input type="submit" value="登録" /> <br />
-	<a href="./">戻る</a>
+	<a href="management">戻る</a>
 </form>
 </div>
 </body>

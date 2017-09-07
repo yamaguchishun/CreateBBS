@@ -22,10 +22,6 @@ public class UserService {
 			user.setPassword(encPassword);
 
 			UserDao userDao = new UserDao();
-			//userDao.getBranch(connection, user);
-			//userDao.getDivision(connection, user);
-			//System.out.println(user.getBranchID());
-			//System.out.println(user.getDivisionID());
 			userDao.insert(connection, user);
 
 			commit(connection);
@@ -87,6 +83,28 @@ public class UserService {
 		}
 	}
 
+	public User checkStatus(int userId) {
+
+		Connection connection = null;
+		try {
+			connection = getConnection();
+
+			UserDao userDao = new UserDao();
+			User user = userDao.checkStatus(connection, userId);
+
+			commit(connection);
+			return user;
+		} catch (RuntimeException e) {
+			rollback(connection);
+			throw e;
+		} catch (Error e) {
+			rollback(connection);
+			throw e;
+		} finally {
+			CloseableUtil.close(connection);
+		}
+	}
+
 	public List<User> getUser() {
 
 		Connection connection = null;
@@ -109,4 +127,48 @@ public class UserService {
 		}
 	}
 
+	public void status(int isworking,int userid) {
+
+		Connection connection = null;
+		try {
+			connection = getConnection();
+			UserDao userDao = new UserDao();
+			userDao.Status(connection,isworking,userid);
+
+			commit(connection);
+
+			return;
+		} catch (RuntimeException e) {
+			rollback(connection);
+			throw e;
+		} catch (Error e) {
+			rollback(connection);
+			throw e;
+		} finally {
+			CloseableUtil.close(connection);
+		}
+	}
+
+	public Boolean checkUser(String account){
+
+		Connection connection = null;
+		try {
+			connection = getConnection();
+			UserDao userDao = new UserDao();
+			boolean checkuser = userDao.checkUser(connection,account);
+
+			commit(connection);
+
+			return checkuser ;
+		} catch (RuntimeException e) {
+			rollback(connection);
+			throw e;
+		} catch (Error e) {
+			rollback(connection);
+			throw e;
+		} finally {
+			CloseableUtil.close(connection);
+		}
+
+	}
 }

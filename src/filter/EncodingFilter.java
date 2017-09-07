@@ -35,11 +35,11 @@ public class EncodingFilter implements Filter {
 	public void init(FilterConfig config) {
 		encoding = config.getInitParameter(INIT_PARAMETER_NAME_ENCODING);
 		if (encoding == null) {
-			System.out.println("EncodingFilter# デフォルトのエンコーディング(UTF-8)を利用します。");
+//			System.out.println("EncodingFilter# デフォルトのエンコーディング(UTF-8)を利用します。");
 			encoding = DEFAULT_ENCODING;
 		} else {
-			System.out.println("EncodingFilter# 設定されたエンコーディング(" + encoding
-					+ ")を利用します。。");
+//			System.out.println("EncodingFilter# 設定されたエンコーディング(" + encoding
+//					+ ")を利用します。。");
 		}
 	}
 

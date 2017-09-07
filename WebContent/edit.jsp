@@ -11,30 +11,59 @@
 </head>
 <body>
 
-<div class="editss">
+<div class="edit">
+	<c:if test="${ not empty erroredit }">
+		<div class="erroredit">
+			<ul>
+				<c:forEach items="${erroredit}" var="error">
+					<li><c:out value="${error}" />
+				</c:forEach>
+			</ul>
+		</div>
+		<c:remove var="erroredit" scope="session"/>
+	</c:if>
+
 		<c:forEach items="${users}" var="user">
-			<div class="edit">
-				<form action="edit" method="post">
-					<label for="name">名前</label>
-					<input name="name" value="${user.name}" id="name"/><br />
+			<form action="edit" method="post">
+				<input type="hidden" name="userid" value="${user.id}" />
+				<label for="name">名前</label>
+				<input name="name" value="${user.name}" id="name"/><br />
 
-					<label for="account">アカウント名</label>
-					<input name="account" value="${user.account}" id="account" /><br />
+				<label for="account">ログインID</label>
+				<input name="account" value="${user.account}" id="account" /><br />
 
-					<label for="password">パスワード</label>
-					<input name="password" value="${user.password}" id="password"/> <br />
+				<label for="password">パスワード</label>
+				<input type="password" name="password" id="password"/><br />
 
-					<label for="branch">支店名</label>
-					<input name="branch" value="${user.branchID}" id="branch"/> <br />
+				<label for="confirmation">パスワード(確認用)</label>
+				<input type="password" name="confirmation" id="confirmation"/> <br />
 
-					<label for="division">部署</label>
-					<input name="division" value="${user.divisionID}" id="division"/> <br />
-					<input type="submit" value="更新" /> <br />
-				</form>
-			</div>
+				<label for="branch">支社名</label>
+				<select name="branch">
+					<c:forEach items="${branches}" var="branch">
+						<c:if test="${user.branchId == branch.id}">
+							<option value="${branch.id}"selected>${branch.name}</option>
+						</c:if>
+						<option value="${branch.id}">${branch.name}</option>
+					</c:forEach>
+				</select><br />
+
+				<label for="division">部署名</label>
+				<select name="division">
+					<c:forEach items="${divisions}" var="division">
+						<c:if test="${user.divisionId == division.id}">
+							<option value="${division.id}"selected>${division.name}</option>
+						</c:if>
+						<option value="${division.id}">${division.name}</option>
+					</c:forEach>
+				</select><br />
+
+				<input type="submit" value="更新" /> <br />
+			</form>
 		</c:forEach>
-		<a href="./">戻る</a>
-	</div>
+
+	<a href="management">戻る</a>
+</div>
 
 </body>
 </html>

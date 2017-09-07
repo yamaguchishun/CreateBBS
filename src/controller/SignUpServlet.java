@@ -13,7 +13,11 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang.StringUtils;
 
+import beans.Branch;
+import beans.Division;
 import beans.User;
+import service.BranchService;
+import service.DivisionService;
 import service.UserService;
 
 @WebServlet(urlPatterns = { "/signup" })
@@ -24,6 +28,11 @@ public class SignUpServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws IOException, ServletException {
 
+		List<Branch> branches = new BranchService().getBranch();
+		List<Division> divisions = new DivisionService().getDivision();
+
+		request.setAttribute("branches", branches);
+		request.setAttribute("divisions", divisions);
 		request.getRequestDispatcher("/signup.jsp").forward(request, response);
 	}
 
@@ -35,19 +44,25 @@ public class SignUpServlet extends HttpServlet {
 
 		HttpSession session = request.getSession();
 		User user = new User();
-		user.setName(request.getParameter("name"));
-		user.setAccount(request.getParameter("account"));
+		boolean checkUser = new UserService().checkUser(request.getParameter("account"));
+
 		user.setPassword(request.getParameter("password"));
-		user.setBranchName(request.getParameter("branch"));
-		user.setDivisionName(request.getParameter("division"));
+		user.setBranchId(Integer.parseInt(request.getParameter("branch")));
+		user.setDivisionId(Integer.parseInt(request.getParameter("division")));
+		user.setName(request.getParameter("name"));
+
+		if(checkUser == true){
+			user.setAccount(request.getParameter("account"));
+		}else{
+			messages.add("入力したログインIDは既に使用されています");
+		}
 
 		if (isValid(request, messages) == true) {
 			new UserService().register(user);
-
-			response.sendRedirect("./");
+			response.sendRedirect("index");
 		} else {
 			session.setAttribute("errorMessages", messages);
-			session.setAttribute("newUser",user);
+			request.setAttribute("newUser",user);
 			response.sendRedirect("signup");
 		}
 	}
@@ -55,12 +70,35 @@ public class SignUpServlet extends HttpServlet {
 	private boolean isValid(HttpServletRequest request, List<String> messages) {
 		String account = request.getParameter("account");
 		String password = request.getParameter("password");
+		String confirmation = request.getParameter("confirmation");
+		String name = request.getParameter("name");
+
+		if (StringUtils.isEmpty(name) == true) {
+			messages.add("名前を入力して下さい");
+		}
+
+		if(10 < name.length()){
+			messages.add("名前は10文字以内で入力して下さい");
+		}
 
 		if (StringUtils.isEmpty(account) == true) {
-			messages.add("アカウント名を入力してください");
+			messages.add("ログインIDを入力して下さい");
 		}
+
+		if(account.matches("^[0-9a-zA-Z]{6,20}+$")!=true){
+			messages.add("ログインIDは半角英数字6～20文字以内で入力して下さい");
+		}
+
 		if (StringUtils.isEmpty(password) == true) {
-			messages.add("パスワードを入力してください");
+			messages.add("パスワードを入力して下さい");
+		}
+
+		if(password.matches("[ -~｡-ﾟ]{6,20}+")!=true){
+			messages.add("パスワードは半角文字6～20文字以内で入力して下さい");
+		}
+
+		if(password.equals(confirmation)==false){
+			messages.add("パスワードと確認用パスワードが一致していません");
 		}
 
 		if (messages.size() == 0) {

@@ -8,35 +8,35 @@ public class Comment implements Serializable {
 
 
 	private int id;
-	private int userID;
-	private int postID;
-	private int branchID;
-	private int divisionID;
+	private int userId;
+	private int postId;
+	private int branchId;
+	private int divisionId;
 	private String text;
 	private Date insertDate;
 
-	public int getPostID() {
-		return postID;
+	public int getPostId() {
+		return postId;
 	}
 
-	public void setPostID(int postID) {
-		this.postID = postID;
+	public void setPostId(int postID) {
+		this.postId = postID;
 	}
 
-	public int getBranchID() {
-		return branchID;
+	public int getBranchId() {
+		return branchId;
 	}
 
-	public void setBranchID(int branchID) {
-		this.branchID = branchID;
+	public void setBranchId(int branchID) {
+		this.branchId = branchID;
 	}
 
-	public int getDivisionID() {
-		return divisionID;
+	public int getDivisionId() {
+		return divisionId;
 	}
 
-	public void setDivisionID(int divisionID) {
-		this.divisionID = divisionID;
+	public void setDivisionId(int divisionID) {
+		this.divisionId = divisionID;
 	}
 
 
@@ -49,11 +49,11 @@ public class Comment implements Serializable {
 	}
 
 	public int getUserId() {
-		return userID;
+		return userId;
 	}
 
-	public void setUserId(int userId) {
-		this.userID = userId;
+	public void setUserId(int userID) {
+		this.userId = userID;
 	}
 
 	public String getText() {

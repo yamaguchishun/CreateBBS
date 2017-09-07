@@ -9,42 +9,89 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>ユーザ管理</title>
+
+<script type="text/javascript">
+<!--
+
+function check(){
+	if(window.confirm('変更を行います。よろしいですか？')){
+		return true;
+	}
+	else{
+		window.alert('キャンセルされました');
+		return false;
+	}
+}
+
+// -->
+</script>
+
 </head>
 <body>
+<a href="signup">新規登録</a>
+<a href="index">戻る</a>
 
-<div class="managements">
+<div class="management">
 		<c:forEach items="${users}" var="user">
-			<div class="management">
-				<form action="edit" method="get">
-					<input type="hidden" name="userid" value="${user.id}" />
-					<table border="1">
-						<tr>
-    						<th>名前</th>
-    						<th>アカウント名</th>
-    						<th>支店名</th>
-    						<th>部署名</th>
-    						<th>パスワード</th>
-    						<th>ステータス</th>
-    						<th>登録日</th>
-    						<th>更新日</th>
- 						</tr>
-						<tr>
-    						<td><c:out value="${user.name}" /></td>
-    						<td><c:out value="${user.account}" /></td>
-    						<td><c:out value="${user.branchID}" /></td>
-    						<td><c:out value="${user.divisionID}" /></td>
-    						<td>****</td>
-    						<td><c:out value="${user.divisionID}" /></td>
-    						<td><c:out value="${user.insertDate}" /></td>
-    						<td><c:out value="${user.updateDate}" /></td>
-  						</tr>
-					</table>
-				<input type="submit" value="編集" /> <br />
-				</form>
-			</div>
-		</c:forEach>
-		<a href="home">戻る</a>
-	</div>
+				<table border="1">
+					<tr>
+    					<th>名前</th>
+    					<th>アカウント名</th>
+    					<th>支店名</th>
+    					<th>部署名</th>
+    					<th>ユーザ編集</th>
+    					<th>アカウント停止/復活</th>
+ 					</tr>
+					<tr>
+    					<td><input type=text readonly name="name" value="${user.name}" /></td>
+    					<td><input type=text readonly name="account" value="${user.account}" /></td>
 
+						<c:forEach items="${branches}" var="branch">
+							<c:if test="${user.branchId== branch.id}">
+    							<td><input type=text readonly name="branch" value="${branch.name}" /></td>
+    						</c:if>
+    					</c:forEach>
+
+    					<c:forEach items="${divisions}" var="division">
+							<c:if test="${user.divisionId== division.id}">
+    							<td><input type=text readonly name="branch" value="${division.name}" /></td>
+    						</c:if>
+    					</c:forEach>
+
+						<c:if test="${user.id == sessionUser.id}">
+    						<td><form action="edit" method="get"><input type="submit" value="編集" disabled/>
+    						<input type="hidden" name="userid" value="${user.id}" /></form></td>
+    					</c:if>
+
+    					<c:if test="${user.id != sessionUser.id}">
+    						<td><form action="edit" method="get"><input type="submit" value="編集"/>
+    						<input type="hidden" name="userid" value="${user.id}" /></form></td>
+    					</c:if>
+
+    					<td><form action="status" method="post" onSubmit="return check()">
+    						<input type="hidden" name="userid" value="${user.id}" >
+							<input type="hidden" name="isworking" value="${user.isWorking}" >
+
+							<c:if test="${user.id != sessionUser.id}">
+								<c:if test="${user.isWorking == 0}">
+									<input type="submit"name="status" value="停止"/>
+								</c:if>
+							</c:if>
+
+							<c:if test="${user.id == sessionUser.id}">
+								<c:if test="${user.isWorking == 0}">
+									<input type="submit"name="status" disabled value="停止"/>
+								</c:if>
+							</c:if>
+
+							<c:if test="${user.isWorking == 1}">
+								<input type="submit"name="status" value="復活"/>
+							</c:if>
+							</form>
+    					</td>
+    				</tr>
+				</table>
+		</c:forEach>
+	</div>
 </body>
 </html>

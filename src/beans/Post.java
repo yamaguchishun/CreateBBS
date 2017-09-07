@@ -8,8 +8,8 @@ public class Post implements Serializable {
 
 	private int id;
 	private int userId;
-	private int branchID;
-	private int divisionID;
+	private int branchId;
+	private int divisionId;
 	private Date insertDate;
 	private String subject;
 	private String category;
@@ -23,11 +23,11 @@ public class Post implements Serializable {
 		this.id = id;
 	}
 
-	public int getUserID(){
+	public int getUserId(){
 		return userId;
 	}
 
-	public void setUserID(int userId){
+	public void setUserId(int userId){
 		this.userId = userId;
 	}
 
@@ -63,19 +63,19 @@ public class Post implements Serializable {
 		this.category = category;
 	}
 
-	public int getBranchID(){
-		return branchID;
+	public int getBranchId(){
+		return branchId;
 	}
 
-	public void setBranchID(int branchID){
-		this.branchID = branchID;
+	public void setBranchId(int branchID){
+		this.branchId = branchID;
 	}
 
-	public int getDivisionID(){
-		return divisionID;
+	public int getDivisionId(){
+		return divisionId;
 	}
 
-	public void setDivisionID(int divisionID){
-		this.divisionID = divisionID;
+	public void setDivisionId(int divisionID){
+		this.divisionId = divisionID;
 	}
 }
