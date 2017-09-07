@@ -38,7 +38,7 @@
 			maxlength="1000"></textarea>
 		<br />
 		<input type="submit" value="投稿">
-		<a href="index">戻る</a>
+		<a href="./">戻る</a>
 	</form>
 	</div>
 </body>

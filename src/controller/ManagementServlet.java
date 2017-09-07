@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import beans.Branch;
 import beans.Division;
@@ -25,14 +26,14 @@ public class ManagementServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws IOException, ServletException {
 
-//		HttpSession session = request.getSession();
+		HttpSession session = request.getSession();
 		User sessionUser = (User) request.getSession().getAttribute("user") ;
 		List<User> users = new UserService().getUser();
 		List<String> messages = new ArrayList<String>();
 		List<Branch> branches = new BranchService().getBranch();
 		List<Division> divisions = new DivisionService().getDivision();
 
-		if(sessionUser.getDivisionId()==2){
+		if(sessionUser.getDivisionId()==1){
 			request.setAttribute("sessionUser", sessionUser);
 			request.setAttribute("users", users);
 			request.setAttribute("branches", branches);
@@ -40,9 +41,8 @@ public class ManagementServlet extends HttpServlet {
 			request.getRequestDispatcher("/management.jsp").forward(request, response);
 		}else{
 			messages.add("アクセスエラー");
-			request.setAttribute("errormanagements", messages);
-			response.sendRedirect("index");
+			session.setAttribute("errorMessages", messages);
+			response.sendRedirect("./");
 		}
 	}
-
 }

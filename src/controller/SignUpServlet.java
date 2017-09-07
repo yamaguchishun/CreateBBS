@@ -44,25 +44,26 @@ public class SignUpServlet extends HttpServlet {
 
 		HttpSession session = request.getSession();
 		User user = new User();
-		boolean checkUser = new UserService().checkUser(request.getParameter("account"));
+		User sessionUser = (User) request.getSession().getAttribute("user") ;
+
+		boolean checkUser = new UserService().checkUser(request.getParameter("account"),sessionUser);
 
 		user.setPassword(request.getParameter("password"));
 		user.setBranchId(Integer.parseInt(request.getParameter("branch")));
 		user.setDivisionId(Integer.parseInt(request.getParameter("division")));
 		user.setName(request.getParameter("name"));
+		user.setAccount(request.getParameter("account"));
 
-		if(checkUser == true){
-			user.setAccount(request.getParameter("account"));
-		}else{
+		if(checkUser == false){
 			messages.add("入力したログインIDは既に使用されています");
 		}
 
 		if (isValid(request, messages) == true) {
 			new UserService().register(user);
-			response.sendRedirect("index");
+			response.sendRedirect("management");
 		} else {
 			session.setAttribute("errorMessages", messages);
-			request.setAttribute("newUser",user);
+			session.setAttribute("newUser",user);
 			response.sendRedirect("signup");
 		}
 	}

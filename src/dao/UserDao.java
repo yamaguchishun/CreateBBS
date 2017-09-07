@@ -110,7 +110,6 @@ public class UserDao {
 				Timestamp insertDate = rs.getTimestamp("insert_date");
 				Timestamp updateDate = rs.getTimestamp("update_date");
 
-
 				user.setId(id);
 				user.setAccount(account);
 				user.setName(name);
@@ -168,7 +167,7 @@ public class UserDao {
 		}
 	}
 
-	public void update(Connection connection, User user,int userid) {
+	public void update(Connection connection, User user) {
 
 		PreparedStatement ps = null;
 		try {
@@ -191,7 +190,7 @@ public class UserDao {
 				ps.setInt(3, user.getBranchId());
 				ps.setString(4, user.getPassword());
 				ps.setInt(5, user.getDivisionId());
-				ps.setInt(6, userid);
+				ps.setInt(6, user.getId());
 
 
 			}else{
@@ -209,7 +208,7 @@ public class UserDao {
 				ps.setString(2, user.getName());
 				ps.setInt(3, user.getBranchId());
 				ps.setInt(4, user.getDivisionId());
-				ps.setInt(5, userid);
+				ps.setInt(5, user.getId());
 			}
 
 			int count = ps.executeUpdate();
@@ -291,11 +290,12 @@ public class UserDao {
 		}
 	}
 
-	public boolean checkUser(Connection connection, String account){
+	public boolean checkUser(Connection connection, String account,User sessionUser){
 
 		PreparedStatement ps = null;
 		try {
 			String sql = "SELECT * FROM yamaguchi_shun.users WHERE account = ?";
+			User user = new User();
 
 			ps = connection.prepareStatement(sql);
 			ps.setString(1, account);
@@ -305,7 +305,9 @@ public class UserDao {
 			List<User> userList = toUserList(rs);
 			if (userList.isEmpty() == true) {
 				return true;
-			}else {
+			}else if(user.getId() == sessionUser.getId()){
+				return true;
+			}else{
 				return false;
 			}
 		} catch (SQLException e) {

@@ -79,7 +79,7 @@ public class PostService {
 			connection = getConnection();
 
 			PostDao postDao = new PostDao();
-			List<Post> ret = postDao.getPost(connection,LIMIT_NUM,startdate,enddate,category);
+			List<Post> ret = postDao.getPost(connection,startdate,enddate,category);
 			commit(connection);
 			return ret;
 		}catch(RuntimeException e){

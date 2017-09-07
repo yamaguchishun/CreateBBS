@@ -12,15 +12,15 @@
 <body>
 
 <div class="edit">
-	<c:if test="${ not empty erroredit }">
-		<div class="erroredit">
+	<c:if test="${ not empty errorMessages }">
+		<div class="errorMessages">
 			<ul>
-				<c:forEach items="${erroredit}" var="error">
-					<li><c:out value="${error}" />
+				<c:forEach items="${errorMessages}" var="message">
+					<li><c:out value="${message}" />
 				</c:forEach>
 			</ul>
 		</div>
-		<c:remove var="erroredit" scope="session"/>
+		<c:remove var="errorMessages" scope="session"/>
 	</c:if>
 
 		<c:forEach items="${users}" var="user">
@@ -41,20 +41,30 @@
 				<label for="branch">支社名</label>
 				<select name="branch">
 					<c:forEach items="${branches}" var="branch">
-						<c:if test="${user.branchId == branch.id}">
-							<option value="${branch.id}"selected>${branch.name}</option>
-						</c:if>
-						<option value="${branch.id}">${branch.name}</option>
+						<c:choose>
+							<c:when test="${user.branchId == branch.id}">
+								<option value="${branch.id}"selected>${branch.name}</option>
+							</c:when>
+
+							<c:when test="${user.branchId != branch.id}">
+								<option value="${branch.id}">${branch.name}</option>
+							</c:when>
+						</c:choose>
 					</c:forEach>
 				</select><br />
 
 				<label for="division">部署名</label>
 				<select name="division">
 					<c:forEach items="${divisions}" var="division">
-						<c:if test="${user.divisionId == division.id}">
-							<option value="${division.id}"selected>${division.name}</option>
-						</c:if>
-						<option value="${division.id}">${division.name}</option>
+						<c:choose>
+							<c:when test="${user.divisionId == division.id}">
+								<option value="${division.id}"selected>${division.name}</option>
+							</c:when>
+
+							<c:when test="${user.divisionId != division.id}">
+								<option value="${division.id}">${division.name}</option>
+							</c:when>
+						</c:choose>
 					</c:forEach>
 				</select><br />
 

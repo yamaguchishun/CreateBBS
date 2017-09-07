@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -27,14 +28,21 @@ public class EditServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws IOException, ServletException {
 
+		HttpSession session = request.getSession();
+		List<String> messages = new ArrayList<String>();
 		List<Branch> branches = new BranchService().getBranch();
 		List<Division> divisions = new DivisionService().getDivision();
 		List<User> users = new UserService().getUser(Integer.parseInt(request.getParameter("userid")));
-
-		request.setAttribute("branches", branches);
-		request.setAttribute("divisions", divisions);
-		request.setAttribute("users", users);
-		request.getRequestDispatcher("/edit.jsp").forward(request, response);
+		if(users.size()==0){
+			messages.add("存在しないユーザです");
+			session.setAttribute("errorMessages",messages);
+			response.sendRedirect("management");
+		}else{
+			request.setAttribute("branches", branches);
+			request.setAttribute("divisions", divisions);
+			request.setAttribute("users", users);
+			request.getRequestDispatcher("/edit.jsp").forward(request, response);
+		}
 	}
 
 	@Override
@@ -42,6 +50,9 @@ public class EditServlet extends HttpServlet {
 			HttpServletResponse response) throws IOException, ServletException {
 
 		List<String> messages = new ArrayList<String>();
+		List<Branch> branches = new BranchService().getBranch();
+		List<Division> divisions = new DivisionService().getDivision();
+		List<User> users = new UserService().getUser(Integer.parseInt(request.getParameter("userid")));
 
 		User user = new User();
 		user.setId(Integer.parseInt(request.getParameter("userid")));
@@ -52,15 +63,12 @@ public class EditServlet extends HttpServlet {
 		user.setPassword(request.getParameter("password"));
 
 		if (isValid(request, messages) == true) {
-			new UserService().update(user,user.getId());
+			new UserService().update(user);
 			response.sendRedirect("management");
 		} else {
-			List<Branch> branches = new BranchService().getBranch();
-			List<Division> divisions = new DivisionService().getDivision();
-			List<User> users = new UserService().getUser(Integer.parseInt(request.getParameter("userid")));
 			request.setAttribute("branches", branches);
 			request.setAttribute("divisions", divisions);
-			request.setAttribute("erroredit", messages);
+			request.setAttribute("errorMessages", messages);
 			request.setAttribute("users",users);
 			request.getRequestDispatcher("/edit.jsp").forward(request, response);
 		}

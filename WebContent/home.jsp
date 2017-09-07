@@ -23,28 +23,6 @@
 		<c:remove var="errorMessages" scope="session"/>
 	</c:if>
 
-	<c:if test="${ not empty errorcomments }">
-		<div class="errors">
-			<ul>
-				<c:forEach items="${errorcomments}" var="errorcomment">
-					<li><c:out value="${errorcomment}" />
-				</c:forEach>
-			</ul>
-		</div>
-		<c:remove var="errorcomments" scope="session"/>
-	</c:if>
-
-	<c:if test="${ not empty errormanagements }">
-		<div class="errormanagementss">
-			<ul>
-				<c:forEach items="${errormanagements}" var="errormanagement">
-					<li><c:out value="${errormanagement}" />
-				</c:forEach>
-			</ul>
-		</div>
-		<c:remove var="errormanagements" scope="session"/>
-	</c:if>
-
 	<div class="main-contents">
 		<a href="newpost">新規投稿</a><br />
 		<a href="management">ユーザ管理</a><br />

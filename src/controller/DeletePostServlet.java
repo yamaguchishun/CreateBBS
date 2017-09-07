@@ -19,7 +19,7 @@ public class DeletePostServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws IOException, ServletException {
 		new PostService().deletePost(Integer.parseInt(request.getParameter("postid")));
-		response.sendRedirect("index");
+		response.sendRedirect("./");
 
 	}
 }

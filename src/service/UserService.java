@@ -36,7 +36,7 @@ public class UserService {
 		}
 	}
 
-	public void update(User user,int userid) {
+	public void update(User user) {
 
 		Connection connection = null;
 		try {
@@ -46,7 +46,7 @@ public class UserService {
 			user.setPassword(encPassword);
 
 			UserDao userDao = new UserDao();
-			userDao.update(connection, user,userid);
+			userDao.update(connection, user);
 
 			commit(connection);
 		} catch (RuntimeException e) {
@@ -149,13 +149,13 @@ public class UserService {
 		}
 	}
 
-	public Boolean checkUser(String account){
+	public Boolean checkUser(String account,User sessionUser){
 
 		Connection connection = null;
 		try {
 			connection = getConnection();
 			UserDao userDao = new UserDao();
-			boolean checkuser = userDao.checkUser(connection,account);
+			boolean checkuser = userDao.checkUser(connection,account,sessionUser);
 
 			commit(connection);
 

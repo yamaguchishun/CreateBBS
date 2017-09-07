@@ -35,11 +35,11 @@ public class CommentServlet extends HttpServlet {
 			comment.setBranchId(Integer.parseInt(request.getParameter("branchid")));
 			comment.setUserId(Integer.parseInt(request.getParameter("userid")));
 			new CommentService().register(comment,comment.getUserId());
-			response.sendRedirect("index");
+			response.sendRedirect("./");
 
 		} else {
-			session.setAttribute("errorcomments", messages);
-			response.sendRedirect("index");
+			session.setAttribute("errorMessages", messages);
+			response.sendRedirect("./");
 		}
 	}
 

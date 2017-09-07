@@ -47,9 +47,10 @@
 			<c:forEach items="${branches}" var="branch">
 				<option value="${branch.id}">${branch.name}</option>
 			</c:forEach>
-	</select><br />
+		</select><br />
 	<input type="submit" value="登録" /> <br />
 	<a href="management">戻る</a>
+	<c:remove var="newUser" scope="session"/>
 </form>
 </div>
 </body>

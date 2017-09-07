@@ -19,7 +19,7 @@ public class DeleteCommentServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws IOException, ServletException {
 		new CommentService().deleteComment(Integer.parseInt(request.getParameter("commentid")));
-		response.sendRedirect("index");
+		response.sendRedirect("./");
 
 	}
 }

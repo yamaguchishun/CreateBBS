@@ -88,15 +88,38 @@ public class PostDao {
 		PreparedStatement ps = null;
 		try{
 			StringBuilder sql = new StringBuilder();
-			sql.append("select * from yamaguchi_shun.posts");
-			sql.append(" where insert_date >= ? and insert_date <= ? and category=?");
-			sql.append(" order by insert_date DESC limit ");
+			if(category!=null){
+				if(category!=""){
+					sql.append("select * from yamaguchi_shun.posts");
+					sql.append(" where insert_date >= ? and insert_date <= ? and category=?");
+					sql.append(" order by insert_date DESC ");
+				}else{
+					sql.append("select * from yamaguchi_shun.posts");
+					sql.append(" where insert_date >= ? and insert_date <= ?");
+					sql.append(" order by insert_date DESC ");
+				}
+			}else{
+				sql.append("select * from yamaguchi_shun.posts");
+				sql.append(" where insert_date >= ? and insert_date <= ?");
+				sql.append(" order by insert_date DESC ");
+			}
 
 			ps = connection.prepareStatement(sql.toString());
 
-			ps.setString(1,startdate);
-			ps.setString(2,enddate);
-			ps.setString(3,category);
+			if(category!=null){
+				if(category!=""){
+					ps.setString(1,startdate);
+					ps.setString(2,enddate);
+					ps.setString(3,category);
+				}else{
+					ps.setString(1,startdate);
+					ps.setString(2,enddate);
+				}
+			}else{
+				ps.setString(1,startdate);
+				ps.setString(2,enddate);
+			}
+
 			ResultSet rs = ps.executeQuery();
 			List<Post>ret = toPostList(rs);
 

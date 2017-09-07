@@ -37,7 +37,7 @@ public class LoginServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		if (user != null && user.getIsWorking() == 0) {
 			session.setAttribute("user", user);
-			response.sendRedirect("index");
+			response.sendRedirect("./");
 		} else {
 			List<String> messages = new ArrayList<String>();
 			messages.add("ログインに失敗しました。");

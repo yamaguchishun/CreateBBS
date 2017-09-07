@@ -16,66 +16,43 @@ import beans.User;
 import service.CommentService;
 import service.PostService;
 
-@WebServlet(urlPatterns = { "/index" })
+@WebServlet(urlPatterns = { "/index.jsp" })
 public class HomeServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	@Override
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws IOException, ServletException {
-		//boolean isShowMessageForm = true;
+
 		String startdate = "20000101";
 		Date todaydate = new Date();
 		String enddate = todaydate.toString();
-		String category;
+		String category = request.getParameter("category");
 
 		List<Post> posts = new PostService().getMesaage(startdate,enddate);
 		List<Comment> comments = new CommentService().getComment();
 		List<Post> categorys = new PostService().getCategory();
 		User sessionUser = (User) request.getSession().getAttribute("user") ;
 
-		if(request.getParameter("category") != null){
-			if(request.getParameter("category") != ""){
-				category =request.getParameter("category");
-
-				if(request.getParameter("startdate")!=null){
-					if(request.getParameter("startdate")!=""){
-						startdate = request.getParameter("startdate");
-					}
-				}
-
-				if(request.getParameter("enddate")!= null){
-					if(request.getParameter("enddate")!=""){
-						enddate = request.getParameter("enddate");
-					}
-				}
-				posts = new PostService().getMesaage(startdate,enddate,category);
+		if(request.getParameter("startdate")!=null){
+			if(request.getParameter("startdate")!=""){
+				startdate = request.getParameter("startdate");
 			}
-
-		}else{
-			if(request.getParameter("startdate")!=null){
-				if(request.getParameter("startdate")!=""){
-					startdate = request.getParameter("startdate");
-				}
-			}
-
-			if(request.getParameter("enddate")!= null){
-				if(request.getParameter("enddate")!=""){
-					enddate = request.getParameter("enddate");
-				}
-			}
-
-			posts = new PostService().getMesaage(startdate,enddate);
 		}
+
+		if(request.getParameter("enddate")!= null){
+			if(request.getParameter("enddate")!=""){
+				enddate = request.getParameter("enddate");
+			}
+		}
+
+		posts = new PostService().getMesaage(startdate,enddate,category);
 
 		request.setAttribute("user", sessionUser);
 		request.setAttribute("posts", posts);
 		request.setAttribute("comments", comments);
 		request.setAttribute("categorys",categorys);
-		request.getRequestDispatcher("/index.jsp").forward(request, response);
+		request.getRequestDispatcher("/home.jsp").forward(request, response);
 	}
-
-
-
 }
 

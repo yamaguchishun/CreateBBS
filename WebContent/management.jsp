@@ -29,9 +29,21 @@ function check(){
 </head>
 <body>
 <a href="signup">新規登録</a>
-<a href="index">戻る</a>
+<a href="./">戻る</a>
 
 <div class="management">
+
+	<c:if test="${ not empty errorMessages }">
+		<div class="errorMessages">
+			<ul>
+				<c:forEach items="${errorMessages}" var="message">
+					<li><c:out value="${message}" />
+				</c:forEach>
+			</ul>
+		</div>
+		<c:remove var="errorMessages" scope="session"/>
+	</c:if>
+
 		<c:forEach items="${users}" var="user">
 				<table border="1">
 					<tr>
@@ -69,8 +81,8 @@ function check(){
     					</c:if>
 
     					<td><form action="status" method="post" onSubmit="return check()">
-    						<input type="hidden" name="userid" value="${user.id}" >
-							<input type="hidden" name="isworking" value="${user.isWorking}" >
+    						<input type="hidden" name="userid" value="${user.id}">
+							<input type="hidden" name="isworking" value="${user.isWorking}">
 
 							<c:if test="${user.id != sessionUser.id}">
 								<c:if test="${user.isWorking == 0}">
