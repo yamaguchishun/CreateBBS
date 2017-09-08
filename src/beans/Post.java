@@ -15,6 +15,7 @@ public class Post implements Serializable {
 	private String category;
 	private String text;
 
+
 	public int getId(){
 		return id;
 	}
@@ -78,4 +79,8 @@ public class Post implements Serializable {
 	public void setDivisionId(int divisionID){
 		this.divisionId = divisionID;
 	}
+
+	public String[] getSplitedText() {
+        return text.split("\n");
+    }
 }

@@ -42,7 +42,7 @@ public class PostService {
 
 	}
 
-	private static final int LIMIT_NUM = 1000;
+	/*private static final int LIMIT_NUM = 1000;
 	public List<Post>getMesaage(String startdate,String enddate){
 		Connection connection = null;
 		try{
@@ -71,7 +71,7 @@ public class PostService {
 				throw e;
 			}
 		}
-	}
+	}*/
 
 	public List<Post>getMesaage(String startdate,String enddate,String category){
 		Connection connection = null;

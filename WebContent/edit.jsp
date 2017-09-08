@@ -38,7 +38,21 @@
 				<label for="confirmation">パスワード(確認用)</label>
 				<input type="password" name="confirmation" id="confirmation"/> <br />
 
+
+
 				<label for="branch">支社名</label>
+
+				<c:if test="${user.id == sessionUser.id }">
+					<select name="branch">
+						<c:forEach items="${branches}" var="branch">
+							<c:if test="${user.branchId == branch.id}">
+								<option value="${branch.id}" >${branch.name}</option>
+							</c:if>
+						</c:forEach>
+					</select><br />
+				</c:if>
+
+				<c:if test="${user.id != sessionUser.id }">
 				<select name="branch">
 					<c:forEach items="${branches}" var="branch">
 						<c:choose>
@@ -52,7 +66,19 @@
 						</c:choose>
 					</c:forEach>
 				</select><br />
+				</c:if>
 
+				<c:if test="${user.id == sessionUser.id }">
+					<select name="division">
+					<c:forEach items="${divisions}" var="division">
+						<c:if test="${user.divisionId == division.id}">
+							<option value="${division.id}"selected>${division.name}</option>
+						</c:if>
+					</c:forEach>
+				</select><br />
+				</c:if>
+
+				<c:if test="${user.id != sessionUser.id }">
 				<label for="division">部署名</label>
 				<select name="division">
 					<c:forEach items="${divisions}" var="division">
@@ -67,6 +93,7 @@
 						</c:choose>
 					</c:forEach>
 				</select><br />
+				</c:if>
 
 				<input type="submit" value="更新" /> <br />
 			</form>

@@ -42,9 +42,12 @@ public class UserService {
 		try {
 			connection = getConnection();
 
-			String encPassword = ChipherUtil.encrypt(user.getPassword());
-			user.setPassword(encPassword);
+			if(user.getPassword() != null && user.getPassword() != ""){
+				String encPassword = ChipherUtil.encrypt(user.getPassword());
+				user.setPassword(encPassword);
+			}
 
+			System.out.println(user.getPassword());
 			UserDao userDao = new UserDao();
 			userDao.update(connection, user);
 

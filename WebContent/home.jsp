@@ -3,12 +3,29 @@
 <%@page isELIgnored="false"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>ホーム</title>
+<script type="text/javascript">
+<!--
+
+function check(){
+	if(window.confirm('実行します。よろしいですか？')){
+		return true;
+	}
+	else{
+		window.alert('キャンセルされました');
+		return false;
+	}
+}
+
+// -->
+</script>
+
 </head>
 <body>
 <div class="messages">
@@ -50,11 +67,13 @@
 			<div class="posts">
 
 				<label for="subject">件名</label><br />
-				<input type="text" name="subject" readonly value="${post.subject}"><br />
+				<c:out value="${post.subject}"/><br />
 
 				<label for="text">本文</label><br />
-				<textarea name="text" cols="100" rows="10" class="tweet-box"
-				maxlength="1000" readonly  align="left"><c:out value="${post.text}" /></textarea><br />
+				<c:forEach items="${fn:split(post.text,'
+')}" var="post">
+				<c:out value="${post}" /><br />
+				</c:forEach>
 
 				<c:if test="${post.userId == user.id}">
 					<label for="insertdate">投稿者：</label>
@@ -67,15 +86,14 @@
 						pattern="yyyy/MM/dd HH:mm:ss" /><br />
 				</div>
 
-
-				<form action="deletepost" method="post">
+				<form action="deletepost" method="post"onClick="return check()">
 					<c:choose>
-						<c:when test="${user.divisionId == 3}">
+						<c:when test="${user.divisionId == 2}">
 							<input type="hidden" name="postid" value="${post.id}" />
 							<input type="submit" value="消去">
 						</c:when>
 
-						<c:when test="${user.divisionId == 4 && user.branchId == post.branchId}">
+						<c:when test="${user.divisionId == 3 && user.branchId == post.branchId}">
 							<input type="hidden" name="postid" value="${post.id}" />
 							<input type="submit" value="消去">
 						</c:when>
@@ -88,24 +106,23 @@
 				</form>
 
 				<c:forEach items="${comments}" var="comment">
-					<form action="deletecomment" method="post">
+					<form action="deletecomment" method="post" onClick="return check()">
 						<c:if test="${comment.postId == post.id}">
 							<label for="text">投稿コメント</label>
 							<br />
-							<textarea name="postcomment" cols="50" rows="3" class="tweet-box"
-							readonly><c:out value="${comment.text}" /></textarea><br />
+							<c:out value="${comment.text}" /><br />
 							<label for="insertdate">投稿日時：</label>
 							<fmt:formatDate value="${comment.insertDate}"
 							pattern="yyyy/MM/dd HH:mm:ss" />
 							<br />
 
 							<c:choose>
-								<c:when test="${user.divisionId == 3}">
+								<c:when test="${user.divisionId == 2}">
 										<input type="hidden" name="commentid" value="${comment.id}"/>
 										<input type="submit" value="消去">
 								</c:when>
 
-								<c:when test="${user.divisionId == 4 && user.branchId == comment.branchId}">
+								<c:when test="${user.divisionId == 3 && user.branchId == comment.branchId}">
 										<input type="hidden" name="commentid" value="${comment.id}"/>
 										<input type="submit" value="消去">
 								</c:when>

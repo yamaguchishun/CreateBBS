@@ -47,7 +47,7 @@ public class NewPostServlet extends HttpServlet {
 			post.setBranchId(Integer.parseInt(request.getParameter("branchid")));
 			post.setCategory(request.getParameter("category"));
 			new PostService().register(post);
-			response.sendRedirect("index");
+			response.sendRedirect("./");
 		} else {
 			session.setAttribute("errorMessages", messages);
 			response.sendRedirect("newpost");

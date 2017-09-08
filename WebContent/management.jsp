@@ -70,37 +70,31 @@ function check(){
     						</c:if>
     					</c:forEach>
 
-						<c:if test="${user.id == sessionUser.id}">
-    						<td><form action="edit" method="get"><input type="submit" value="編集" disabled/>
-    						<input type="hidden" name="userid" value="${user.id}" /></form></td>
-    					</c:if>
+    					<td><form action="edit" method="get"><input type="submit" value="編集"/>
+    					<input type="hidden" name="userid" value="${user.id}" /></form></td>
 
-    					<c:if test="${user.id != sessionUser.id}">
-    						<td><form action="edit" method="get"><input type="submit" value="編集"/>
-    						<input type="hidden" name="userid" value="${user.id}" /></form></td>
-    					</c:if>
+    					<td>
+    						<form action="status" method="post" onSubmit="return check()">
+    							<input type="hidden" name="userid" value="${user.id}">
+								<input type="hidden" name="isworking" value="${user.isWorking}">
 
-    					<td><form action="status" method="post" onSubmit="return check()">
-    						<input type="hidden" name="userid" value="${user.id}">
-							<input type="hidden" name="isworking" value="${user.isWorking}">
-
-							<c:if test="${user.id != sessionUser.id}">
-								<c:if test="${user.isWorking == 0}">
-									<input type="submit"name="status" value="停止"/>
+								<c:if test="${user.id != sessionUser.id}">
+									<c:if test="${user.isWorking == 0}">
+										<input type="submit"name="status" value="停止"/>
+									</c:if>
 								</c:if>
-							</c:if>
 
-							<c:if test="${user.id == sessionUser.id}">
-								<c:if test="${user.isWorking == 0}">
-									<input type="submit"name="status" disabled value="停止"/>
+								<c:if test="${user.id == sessionUser.id}">
+									<c:if test="${user.isWorking == 0}">
+										<input type="submit"name="status" disabled value="停止"/>
+									</c:if>
 								</c:if>
-							</c:if>
 
-							<c:if test="${user.isWorking == 1}">
-								<input type="submit"name="status" value="復活"/>
-							</c:if>
+								<c:if test="${user.isWorking == 1}">
+									<input type="submit"name="status" value="復活"/>
+								</c:if>
 							</form>
-    					</td>
+						</td>
     				</tr>
 				</table>
 		</c:forEach>

@@ -60,29 +60,6 @@ public class PostDao {
 		}
 	}
 
-	public  List<Post> getPost(Connection connection,int num,String startdate,String enddate){
-		PreparedStatement ps = null;
-		try{
-			StringBuilder sql = new StringBuilder();
-			sql.append("select * from yamaguchi_shun.posts");
-			sql.append(" where insert_date >= ? and insert_date <= ? ");
-			sql.append(" order by insert_date DESC limit " + num);
-
-			ps = connection.prepareStatement(sql.toString());
-
-			ps.setString(1,startdate);
-			ps.setString(2,enddate);
-			ResultSet rs = ps.executeQuery();
-			List<Post>ret = toPostList(rs);
-
-			return ret;
-		}catch(SQLException e){
-			throw new SQLRuntimeException(e);
-		}finally{
-			close(ps);
-		}
-	}
-
 	public  List<Post> getPost(Connection connection,
 			String startdate,String enddate,String category){
 		PreparedStatement ps = null;
@@ -121,6 +98,7 @@ public class PostDao {
 			}
 
 			ResultSet rs = ps.executeQuery();
+			System.out.println(ps);
 			List<Post>ret = toPostList(rs);
 
 			return ret;
@@ -173,6 +151,9 @@ public class PostDao {
 				post.setCategory(cateGory);
 				post.setText(text);
 				post.setInsertDate(insertDate);
+				System.out.println(post.getText());
+				post.getSplitedText();
+				System.out.println(post.getText());
 
 				ret.add(post);
 			}

@@ -32,7 +32,16 @@ public class EditServlet extends HttpServlet {
 		List<String> messages = new ArrayList<String>();
 		List<Branch> branches = new BranchService().getBranch();
 		List<Division> divisions = new DivisionService().getDivision();
+		User sessionUser = (User) request.getSession().getAttribute("user") ;
+
+		if(request.getParameter("userid") == " "){
+			messages.add("存在しないユーザです");
+			session.setAttribute("errorMessages",messages);
+			response.sendRedirect("management");
+		}
+
 		List<User> users = new UserService().getUser(Integer.parseInt(request.getParameter("userid")));
+
 		if(users.size()==0){
 			messages.add("存在しないユーザです");
 			session.setAttribute("errorMessages",messages);
@@ -41,6 +50,7 @@ public class EditServlet extends HttpServlet {
 			request.setAttribute("branches", branches);
 			request.setAttribute("divisions", divisions);
 			request.setAttribute("users", users);
+			request.setAttribute("sessionUser",sessionUser);
 			request.getRequestDispatcher("/edit.jsp").forward(request, response);
 		}
 	}

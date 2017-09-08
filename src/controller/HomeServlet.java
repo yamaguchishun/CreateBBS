@@ -29,7 +29,7 @@ public class HomeServlet extends HttpServlet {
 		String enddate = todaydate.toString();
 		String category = request.getParameter("category");
 
-		List<Post> posts = new PostService().getMesaage(startdate,enddate);
+		List<Post> posts = new PostService().getMesaage(startdate,enddate,category);
 		List<Comment> comments = new CommentService().getComment();
 		List<Post> categorys = new PostService().getCategory();
 		User sessionUser = (User) request.getSession().getAttribute("user") ;
@@ -42,7 +42,7 @@ public class HomeServlet extends HttpServlet {
 
 		if(request.getParameter("enddate")!= null){
 			if(request.getParameter("enddate")!=""){
-				enddate = request.getParameter("enddate");
+				enddate = request.getParameter("enddate") + "235959" ;
 			}
 		}
 

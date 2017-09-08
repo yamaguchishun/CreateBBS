@@ -174,24 +174,41 @@ public class UserDao {
 			StringBuilder sql = new StringBuilder();
 
 			if (user.getPassword() != null){
-				sql.append("UPDATE yamaguchi_shun.users SET");
-				sql.append("  account = ?");
-				sql.append(", name = ?");
-				sql.append(", branch_id = ?");
-				sql.append(", password = ?");
-				sql.append(", division_id = ?");
-				sql.append(" WHERE");
-				sql.append(" id = ?");
+				if(user.getPassword() != ""){
+					sql.append("UPDATE yamaguchi_shun.users SET");
+					sql.append("  account = ?");
+					sql.append(", name = ?");
+					sql.append(", branch_id = ?");
+					sql.append(", password = ?");
+					sql.append(", division_id = ?");
+					sql.append(" WHERE");
+					sql.append(" id = ?");
 
-				ps = connection.prepareStatement(sql.toString());
+					ps = connection.prepareStatement(sql.toString());
 
-				ps.setString(1, user.getAccount());
-				ps.setString(2, user.getName());
-				ps.setInt(3, user.getBranchId());
-				ps.setString(4, user.getPassword());
-				ps.setInt(5, user.getDivisionId());
-				ps.setInt(6, user.getId());
+					ps.setString(1, user.getAccount());
+					ps.setString(2, user.getName());
+					ps.setInt(3, user.getBranchId());
+					ps.setString(4, user.getPassword());
+					ps.setInt(5, user.getDivisionId());
+					ps.setInt(6, user.getId());
+				}else{
+					sql.append("UPDATE yamaguchi_shun.users SET");
+					sql.append("  account = ?");
+					sql.append(", name = ?");
+					sql.append(", branch_id = ?");
+					sql.append(", division_id = ?");
+					sql.append(" WHERE");
+					sql.append(" id = ?");
 
+					ps = connection.prepareStatement(sql.toString());
+
+					ps.setString(1, user.getAccount());
+					ps.setString(2, user.getName());
+					ps.setInt(3, user.getBranchId());
+					ps.setInt(4, user.getDivisionId());
+					ps.setInt(5, user.getId());
+				}
 
 			}else{
 				sql.append("UPDATE yamaguchi_shun.users SET");
