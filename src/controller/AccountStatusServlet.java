@@ -28,5 +28,6 @@ public class AccountStatusServlet extends HttpServlet {
 
 		new UserService().status(status,Integer.parseInt(request.getParameter("userid")));
 		response.sendRedirect("management");
+		return;
 	}
 }

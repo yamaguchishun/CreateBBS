@@ -26,19 +26,21 @@
 		<c:forEach items="${users}" var="user">
 			<form action="edit" method="post">
 				<input type="hidden" name="userid" value="${user.id}" />
-				<label for="name">名前</label>
-				<input name="name" value="${user.name}" id="name"/><br />
+				<label for="name">名前(10文字以内)</label>
+				<input name="name" value="${user.name}" id="name"/>
+				<label for="name">(10文字以内)</label><br />
 
 				<label for="account">ログインID</label>
-				<input name="account" value="${user.account}" id="account" /><br />
+				<input name="account" value="${user.account}" id="account" />
+				<label for="account">(半角英数字6～20文字)</label><br />
 
 				<label for="password">パスワード</label>
-				<input type="password" name="password" id="password"/><br />
+				<input type="password" name="password" id="password"/>
+				<label for="password">(半角文字6～20文字)</label><br />
 
 				<label for="confirmation">パスワード(確認用)</label>
-				<input type="password" name="confirmation" id="confirmation"/> <br />
-
-
+				<input type="password" name="confirmation" id="confirmation"/>
+				<label for="confirmation">(半角文字6～20文字)</label><br />
 
 				<label for="branch">支社名</label>
 
@@ -68,6 +70,7 @@
 				</select><br />
 				</c:if>
 
+				<label for="division">部署/役職名</label>
 				<c:if test="${user.id == sessionUser.id }">
 					<select name="division">
 					<c:forEach items="${divisions}" var="division">
@@ -79,20 +82,19 @@
 				</c:if>
 
 				<c:if test="${user.id != sessionUser.id }">
-				<label for="division">部署名</label>
-				<select name="division">
-					<c:forEach items="${divisions}" var="division">
-						<c:choose>
-							<c:when test="${user.divisionId == division.id}">
-								<option value="${division.id}"selected>${division.name}</option>
-							</c:when>
+					<select name="division">
+						<c:forEach items="${divisions}" var="division">
+							<c:choose>
+								<c:when test="${user.divisionId == division.id}">
+									<option value="${division.id}"selected>${division.name}</option>
+								</c:when>
 
-							<c:when test="${user.divisionId != division.id}">
-								<option value="${division.id}">${division.name}</option>
-							</c:when>
-						</c:choose>
-					</c:forEach>
-				</select><br />
+								<c:when test="${user.divisionId != division.id}">
+									<option value="${division.id}">${division.name}</option>
+								</c:when>
+							</c:choose>
+						</c:forEach>
+					</select><br />
 				</c:if>
 
 				<input type="submit" value="更新" /> <br />

@@ -24,7 +24,7 @@
 	</c:if>
 
 	<form action="login" method="post"><br />
-		<label for="account">アカウント名</label>
+		<label for="account">ログインID</label>
 		<input name="account" id="account"/> <br />
 		<label for="password">パスワード</label>
 		<input name="password" type="password" id="password"/><br />

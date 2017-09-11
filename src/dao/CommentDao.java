@@ -21,7 +21,6 @@ public class CommentDao {
 			StringBuilder sql = new StringBuilder();
 			sql.append("INSERT INTO yamaguchi_shun.comments(");
 			sql.append("user_id,post_id,text,branch_id,division_id)");
-			//sql.append("VALUES(?,?,?,?,?,?)");
 			sql.append("VALUES(?,?,?,?,?)");
 
 			ps = connection.prepareStatement(sql.toString());
@@ -49,7 +48,6 @@ public class CommentDao {
 
 			ps = connection.prepareStatement(sql.toString());
 
-//			ps.setInt(1,userComment.getId());
 			ps.setInt(1,commentid);
 			ps.executeUpdate();
 		}catch(SQLException e){
@@ -70,14 +68,6 @@ public class CommentDao {
 
 			ResultSet rs = ps.executeQuery();
 			List<Comment> commentList = toCommentList(rs);
-			/*if (userList.isEmpty() == true) {
-				return null;
-			} else if (2 <= userList.size()) {
-				throw new IllegalStateException("2 <= userList.size()");
-			} else {
-				return userList;
-			}*/
-
 
 			return commentList;
 		} catch (SQLException e) {
@@ -108,8 +98,6 @@ public class CommentDao {
 				comment.setPostId(postID);
 				comment.setDivisionId(divisionID);
 				comment.setInsertDate(insertDate);
-//				System.out.println("ユーザーID" + comment.getUserId());
-
 				ret.add(comment);
 			}
 			return ret;
@@ -123,12 +111,13 @@ public class CommentDao {
 		try{
 			StringBuilder sql = new StringBuilder();
 			sql.append("select * from yamaguchi_shun.comments");
-			sql.append(" order by insert_date DESC limit " + num);
+			sql.append(" order by insert_date DESC ");
 
 			ps = connection.prepareStatement(sql.toString());
 
 			ResultSet rs = ps.executeQuery();
 			List<Comment>ret = toCommentList(rs);
+
 			return ret;
 		}catch(SQLException e){
 			throw new SQLRuntimeException(e);

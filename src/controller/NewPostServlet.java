@@ -29,6 +29,7 @@ public class NewPostServlet extends HttpServlet {
 		User user = (User) session.getAttribute("loginUser");
 		request.setAttribute("user",user);
 		request.getRequestDispatcher("/newpost.jsp").forward(request, response);
+		return;
 	}
 
 	protected void doPost(HttpServletRequest request,
@@ -48,9 +49,11 @@ public class NewPostServlet extends HttpServlet {
 			post.setCategory(request.getParameter("category"));
 			new PostService().register(post);
 			response.sendRedirect("./");
+			return;
 		} else {
 			session.setAttribute("errorMessages", messages);
 			response.sendRedirect("newpost");
+			return;
 		}
 	}
 

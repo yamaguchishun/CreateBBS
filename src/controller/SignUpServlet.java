@@ -34,6 +34,7 @@ public class SignUpServlet extends HttpServlet {
 		request.setAttribute("branches", branches);
 		request.setAttribute("divisions", divisions);
 		request.getRequestDispatcher("/signup.jsp").forward(request, response);
+		return;
 	}
 
 	@Override
@@ -61,10 +62,12 @@ public class SignUpServlet extends HttpServlet {
 		if (isValid(request, messages) == true) {
 			new UserService().register(user);
 			response.sendRedirect("management");
+			return;
 		} else {
 			session.setAttribute("errorMessages", messages);
 			session.setAttribute("newUser",user);
 			response.sendRedirect("signup");
+			return;
 		}
 	}
 

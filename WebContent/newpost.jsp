@@ -30,13 +30,10 @@
 		<input type="text" name ="category"><br />
 
 		<label for="subject">件名</label><br />
-		<textarea name="subject" cols="100" rows="1" class="tweet-box"
-			maxlength="30"></textarea><br />
+		<input type="text" name="subject" /><br />
 
 		<label for="text">本文</label><br />
-		<textarea name="text" cols="100" rows="10" class="tweet-box"
-			maxlength="1000"></textarea>
-		<br />
+		<textarea name="text" cols="100" rows="15" class="tweet-box" maxlength="1000"></textarea><br />
 		<input type="submit" value="投稿">
 		<a href="./">戻る</a>
 	</form>

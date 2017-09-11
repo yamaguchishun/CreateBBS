@@ -47,7 +47,6 @@ public class UserService {
 				user.setPassword(encPassword);
 			}
 
-			System.out.println(user.getPassword());
 			UserDao userDao = new UserDao();
 			userDao.update(connection, user);
 
@@ -173,5 +172,49 @@ public class UserService {
 			CloseableUtil.close(connection);
 		}
 
+	}
+
+	public boolean checkLoginId(String account,List<User> user){
+
+		Connection connection = null;
+		try {
+			connection = getConnection();
+			UserDao userDao = new UserDao();
+			boolean checkLoginId = userDao.checkLoginId(connection,account,user);
+
+			commit(connection);
+
+			return checkLoginId ;
+		} catch (RuntimeException e) {
+			rollback(connection);
+			throw e;
+		} catch (Error e) {
+			rollback(connection);
+			throw e;
+		} finally {
+			CloseableUtil.close(connection);
+		}
+	}
+
+	public List<User> getLoginId(String account){
+
+		Connection connection = null;
+		try {
+			connection = getConnection();
+			UserDao userDao = new UserDao();
+			List<User> getLoginId = userDao.getLoginId(connection,account);
+
+			commit(connection);
+
+			return getLoginId ;
+		} catch (RuntimeException e) {
+			rollback(connection);
+			throw e;
+		} catch (Error e) {
+			rollback(connection);
+			throw e;
+		} finally {
+			CloseableUtil.close(connection);
+		}
 	}
 }

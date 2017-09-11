@@ -334,6 +334,57 @@ public class UserDao {
 		}
 
 	}
+
+	public boolean checkLoginId(Connection connection, String account,List<User> user){
+
+		PreparedStatement ps = null;
+		try {
+			String sql = "SELECT * FROM yamaguchi_shun.users WHERE account = ?";
+
+			ps = connection.prepareStatement(sql);
+			ps.setString(1, account);
+
+			ResultSet rs = ps.executeQuery();
+
+			List<User> userList = toUserList(rs);
+			if (userList.isEmpty() == true) {
+				return true;
+			}else if(userList.get(0).getId() == user.get(0).getId()){
+				return true;
+			}else{
+				return false;
+			}
+		} catch (SQLException e) {
+			throw new SQLRuntimeException(e);
+		} finally {
+			CloseableUtil.close(ps);
+		}
+
+	}
+
+	public List<User> getLoginId(Connection connection, String account){
+
+		PreparedStatement ps = null;
+		try {
+			String sql = "SELECT * FROM yamaguchi_shun.users WHERE account = ?";
+
+			ps = connection.prepareStatement(sql);
+			ps.setString(1, account);
+
+			ResultSet rs = ps.executeQuery();
+
+			List<User> userList = toUserList(rs);
+			return userList;
+
+		} catch (SQLException e) {
+			throw new SQLRuntimeException(e);
+		} finally {
+			CloseableUtil.close(ps);
+		}
+
+	}
+
+
 }
 
 

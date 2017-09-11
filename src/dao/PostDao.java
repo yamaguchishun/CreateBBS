@@ -63,6 +63,9 @@ public class PostDao {
 	public  List<Post> getPost(Connection connection,
 			String startdate,String enddate,String category){
 		PreparedStatement ps = null;
+//		System.out.println(startdate);
+//		System.out.println(enddate);
+//		System.out.println(category);
 		try{
 			StringBuilder sql = new StringBuilder();
 			if(category!=null){
@@ -98,7 +101,6 @@ public class PostDao {
 			}
 
 			ResultSet rs = ps.executeQuery();
-			System.out.println(ps);
 			List<Post>ret = toPostList(rs);
 
 			return ret;
@@ -151,10 +153,8 @@ public class PostDao {
 				post.setCategory(cateGory);
 				post.setText(text);
 				post.setInsertDate(insertDate);
-				System.out.println(post.getText());
-				post.getSplitedText();
-				System.out.println(post.getText());
-
+//				System.out.println(post.getId());
+//				System.out.println(post.getInsertDate());
 				ret.add(post);
 			}
 			return ret;

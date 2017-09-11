@@ -29,6 +29,9 @@ public class CommentServlet extends HttpServlet {
 
 		if (isValid(request, messages) == true) {
 			Comment comment = new Comment();
+//			System.out.println(request.getParameter("postid"));
+//			System.out.println(request.getParameter("comment"));
+//			System.out.println(request.getParameter("userid"));
 			comment.setText(request.getParameter("comment"));
 			comment.setPostId(Integer.parseInt(request.getParameter("postid")));
 			comment.setDivisionId(Integer.parseInt(request.getParameter("divisionid")));
@@ -36,10 +39,14 @@ public class CommentServlet extends HttpServlet {
 			comment.setUserId(Integer.parseInt(request.getParameter("userid")));
 			new CommentService().register(comment,comment.getUserId());
 			response.sendRedirect("./");
+			return;
 
 		} else {
 			session.setAttribute("errorMessages", messages);
+			session.setAttribute("sessionPostid", request.getParameter("postid"));
+			session.setAttribute("sessionComment", request.getParameter("comment"));
 			response.sendRedirect("./");
+			return;
 		}
 	}
 

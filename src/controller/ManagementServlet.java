@@ -39,10 +39,12 @@ public class ManagementServlet extends HttpServlet {
 			request.setAttribute("branches", branches);
 			request.setAttribute("divisions", divisions);
 			request.getRequestDispatcher("/management.jsp").forward(request, response);
+			return;
 		}else{
 			messages.add("アクセスエラー");
 			session.setAttribute("errorMessages", messages);
 			response.sendRedirect("./");
+			return;
 		}
 	}
 }

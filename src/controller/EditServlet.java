@@ -34,24 +34,46 @@ public class EditServlet extends HttpServlet {
 		List<Division> divisions = new DivisionService().getDivision();
 		User sessionUser = (User) request.getSession().getAttribute("user") ;
 
-		if(request.getParameter("userid") == " "){
-			messages.add("存在しないユーザです");
+		if(request.getParameter("userid") != null){
+			if(request.getParameter("userid") == ""){
+				messages.add("無効な値です");
+				session.setAttribute("errorMessages",messages);
+				response.sendRedirect("management");
+				return;
+			}else{
+				if(request.getParameter("userid").matches("^[0-9]+$") != true  ){
+					messages.add("無効な値です");
+					session.setAttribute("errorMessages",messages);
+					response.sendRedirect("management");
+					return;
+				}else if(isNumber(request.getParameter("userid")) == false){
+					messages.add("無効な値です");
+					session.setAttribute("errorMessages",messages);
+					response.sendRedirect("management");
+					return;
+				}
+			}
+		}else{
+			messages.add("無効な値です");
 			session.setAttribute("errorMessages",messages);
 			response.sendRedirect("management");
+			return;
 		}
 
 		List<User> users = new UserService().getUser(Integer.parseInt(request.getParameter("userid")));
 
 		if(users.size()==0){
-			messages.add("存在しないユーザです");
+			messages.add("無効な値です");
 			session.setAttribute("errorMessages",messages);
 			response.sendRedirect("management");
+			return;
 		}else{
 			request.setAttribute("branches", branches);
 			request.setAttribute("divisions", divisions);
 			request.setAttribute("users", users);
 			request.setAttribute("sessionUser",sessionUser);
 			request.getRequestDispatcher("/edit.jsp").forward(request, response);
+			return;
 		}
 	}
 
@@ -63,11 +85,26 @@ public class EditServlet extends HttpServlet {
 		List<Branch> branches = new BranchService().getBranch();
 		List<Division> divisions = new DivisionService().getDivision();
 		List<User> users = new UserService().getUser(Integer.parseInt(request.getParameter("userid")));
-
+		boolean checkLoginId = new UserService().checkLoginId(request.getParameter("account"),users);
 		User user = new User();
 		user.setId(Integer.parseInt(request.getParameter("userid")));
 		user.setName(request.getParameter("name"));
-		user.setAccount(request.getParameter("account"));
+		user.setBranchId(Integer.parseInt(request.getParameter("branch")));
+		user.setDivisionId(Integer.parseInt(request.getParameter("division")));
+		user.setPassword(request.getParameter("password"));
+
+		if(checkLoginId == false){
+			messages.add("入力したログインIDは既に使用されています");
+			request.setAttribute("branches", branches);
+			request.setAttribute("divisions", divisions);
+			request.setAttribute("errorMessages", messages);
+			request.setAttribute("users",users);
+			request.getRequestDispatcher("/edit.jsp").forward(request, response);
+			return;
+		}else{
+			user.setAccount(request.getParameter("account"));
+		}
+
 		user.setBranchId(Integer.parseInt(request.getParameter("branch")));
 		user.setDivisionId(Integer.parseInt(request.getParameter("division")));
 		user.setPassword(request.getParameter("password"));
@@ -75,12 +112,14 @@ public class EditServlet extends HttpServlet {
 		if (isValid(request, messages) == true) {
 			new UserService().update(user);
 			response.sendRedirect("management");
+			return;
 		} else {
 			request.setAttribute("branches", branches);
 			request.setAttribute("divisions", divisions);
 			request.setAttribute("errorMessages", messages);
 			request.setAttribute("users",users);
 			request.getRequestDispatcher("/edit.jsp").forward(request, response);
+			return;
 		}
 	}
 
@@ -123,6 +162,15 @@ public class EditServlet extends HttpServlet {
 		if (messages.size() == 0) {
 			return true;
 		} else {
+			return false;
+		}
+	}
+
+	public boolean isNumber(String value) {
+		try {
+			Integer.parseInt(value);
+			return true;
+		} catch (NumberFormatException nfex) {
 			return false;
 		}
 	}
