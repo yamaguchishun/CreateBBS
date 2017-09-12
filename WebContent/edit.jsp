@@ -6,12 +6,13 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+<link rel="stylesheet" type="text/css" href="./css/schema.css">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>ユーザ編集</title>
 </head>
 <body>
 
-<div class="edit">
+<div class="main-contents">
 	<c:if test="${ not empty errorMessages }">
 		<div class="errorMessages">
 			<ul>
@@ -23,13 +24,8 @@
 		<c:remove var="errorMessages" scope="session"/>
 	</c:if>
 
-		<c:forEach items="${users}" var="user">
-			<form action="edit" method="post">
-				<input type="hidden" name="userid" value="${user.id}" />
-				<label for="name">名前(10文字以内)</label>
-				<input name="name" value="${user.name}" id="name"/>
-				<label for="name">(10文字以内)</label><br />
 
+			<form action="edit" method="post">
 				<label for="account">ログインID</label>
 				<input name="account" value="${user.account}" id="account" />
 				<label for="account">(半角英数字6～20文字)</label><br />
@@ -40,9 +36,14 @@
 
 				<label for="confirmation">パスワード(確認用)</label>
 				<input type="password" name="confirmation" id="confirmation"/>
-				<label for="confirmation">(半角文字6～20文字)</label><br />
+				<label for="confirmation">(パスワードを再入力して下さい)</label><br />
 
-				<label for="branch">支社名</label>
+				<input type="hidden" name="userid" value="${user.id}" />
+				<label for="name">名前</label>
+				<input name="name" value="${user.name}" id="name"/>
+				<label for="name">(10文字以内)</label><br />
+
+				<label for="branch">支店名</label>
 
 				<c:if test="${user.id == sessionUser.id }">
 					<select name="branch">
@@ -97,11 +98,10 @@
 					</select><br />
 				</c:if>
 
+				<c:remove var="sessionUser" scope="session"/>
 				<input type="submit" value="更新" /> <br />
 			</form>
-		</c:forEach>
-
-	<a href="management">戻る</a>
+		<a href="management">戻る</a>
 </div>
 
 </body>

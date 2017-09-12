@@ -16,6 +16,7 @@ import beans.Post;
 import beans.User;
 import service.CommentService;
 import service.PostService;
+import service.UserService;
 
 @WebServlet(urlPatterns = { "/index.jsp" })
 public class HomeServlet extends HttpServlet {
@@ -53,24 +54,11 @@ public class HomeServlet extends HttpServlet {
 		List<Post> posts = new PostService().getMesaage(startdate,enddate,category);
 		List<Comment> comments = new CommentService().getComment();
 		List<Post> categorys = new PostService().getCategory();
+		List<User> users = new UserService().getUser();
 		User sessionUser = (User) request.getSession().getAttribute("user") ;
 
-//		posts = new PostService().getMesaage(startdate,enddate,category);
-
-
-		/*if(session.getAttribute("enddates") != null ){
-			enddate = session.getAttribute("enddates").toString();
-		}
-
-		if(session.getAttribute("startdates") != null ){
-			startdate = session.getAttribute("startdates").toString();
-		}
-
-		if(session.getAttribute("sessionCategory") != null ){
-			startdate = session.getAttribute("sessionCategory").toString();
-		}*/
-
-		request.setAttribute("user", sessionUser);
+		request.setAttribute("users", users);
+		request.setAttribute("sessionUser", sessionUser);
 		request.setAttribute("posts", posts);
 		request.setAttribute("comments", comments);
 		request.setAttribute("categorys",categorys);

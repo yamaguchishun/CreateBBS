@@ -30,6 +30,7 @@ public class ManagementFilter implements Filter{
 				messages.add("アクセスエラー");
 				session.setAttribute("errorMessages", messages);
 				((HttpServletResponse) response).sendRedirect("./");
+				return;
 			}
 
 		}catch (ServletException se){

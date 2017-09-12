@@ -19,6 +19,7 @@ import beans.User;
 import service.BranchService;
 import service.DivisionService;
 import service.UserService;
+import util.TrimUtil;
 
 @WebServlet(urlPatterns = { "/signup" })
 public class SignUpServlet extends HttpServlet {
@@ -72,25 +73,17 @@ public class SignUpServlet extends HttpServlet {
 	}
 
 	private boolean isValid(HttpServletRequest request, List<String> messages) {
-		String account = request.getParameter("account");
-		String password = request.getParameter("password");
-		String confirmation = request.getParameter("confirmation");
-		String name = request.getParameter("name");
-
-		if (StringUtils.isEmpty(name) == true) {
-			messages.add("名前を入力して下さい");
-		}
-
-		if(10 < name.length()){
-			messages.add("名前は10文字以内で入力して下さい");
-		}
+		String account = TrimUtil.trimWhitespace(request.getParameter("account"));
+		String password = TrimUtil.trimWhitespace(request.getParameter("password"));
+		String confirmation = TrimUtil.trimWhitespace(request.getParameter("confirmation"));
+		String name = TrimUtil.trimWhitespace(request.getParameter("name"));
 
 		if (StringUtils.isEmpty(account) == true) {
 			messages.add("ログインIDを入力して下さい");
 		}
 
 		if(account.matches("^[0-9a-zA-Z]{6,20}+$")!=true){
-			messages.add("ログインIDは半角英数字6～20文字以内で入力して下さい");
+			messages.add("【ログインID】入力エラー");
 		}
 
 		if (StringUtils.isEmpty(password) == true) {
@@ -98,11 +91,19 @@ public class SignUpServlet extends HttpServlet {
 		}
 
 		if(password.matches("[ -~｡-ﾟ]{6,20}+")!=true){
-			messages.add("パスワードは半角文字6～20文字以内で入力して下さい");
+			messages.add("【パスワード】入力エラー");
 		}
 
 		if(password.equals(confirmation)==false){
 			messages.add("パスワードと確認用パスワードが一致していません");
+		}
+
+		if (StringUtils.isEmpty(name) == true) {
+			messages.add("名前を入力して下さい");
+		}
+
+		if(10 < name.length()){
+			messages.add("【名前】入力エラー");
 		}
 
 		if (messages.size() == 0) {

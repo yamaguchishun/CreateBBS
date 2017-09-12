@@ -8,6 +8,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+<link rel="stylesheet" type="text/css" href="./css/schema.css">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>ホーム</title>
 <script type="text/javascript">
@@ -42,7 +43,9 @@ function check(){
 
 	<div class="main-contents">
 		<a href="newpost">新規投稿</a><br />
+		<c:if test="${sessionUser.divisionId == 1 }">
 		<a href="management">ユーザ管理</a><br />
+		</c:if>
 		<a href="logout">ログアウト</a><br />
 	</div>
 
@@ -96,79 +99,93 @@ function check(){
 
 	<c:forEach items="${posts}" var="post">
 		<div class="posts">
+			<div class="text">
+				<label for="subject">件名</label>
+				<c:out value="${post.subject}"/><br />
 
-			<label for="subject">件名</label><br />
-			<c:out value="${post.subject}"/><br />
-
-			<label for="text">本文</label><br />
-			<c:forEach items="${fn:split(post.text,'
+				<label for="text">本文</label>
+				<c:forEach items="${fn:split(post.text,'
 ')}" var="splitpost">
-				<c:out value="${splitpost}" /><br />
-			</c:forEach>
+					<c:out value="${splitpost}" /><br />
+				</c:forEach>
 
-			<c:if test="${post.userId == user.id}">
-				<label for="insertdate">投稿者：</label>
-				<c:out value="${user.name}"/><br />
-			</c:if>
+				<c:if test="${post.userId == sessionUser.id}">
+					<label for="insertdate">投稿者：${sessionUser.name}</label>
+					<c:out value="${sessionUser.name}"/><br />
+				</c:if>
 
 				<div class="date">
 					<label for="insertdate">投稿日時：</label>
 					<fmt:formatDate value="${post.insertDate}"
 						pattern="yyyy/MM/dd HH:mm:ss" /><br />
 				</div>
+			</div>
 
 				<form action="deletepost" method="post"onClick="return check()">
 					<c:choose>
-						<c:when test="${user.divisionId == 2}">
+						<c:when test="${sessionUser.divisionId == 2}">
 							<input type="hidden" name="postid" value="${post.id}"/>
-							<input type="submit" value="消去">
+							<input type="submit" value="メッセージ削除">
 						</c:when>
 
-						<c:when test="${user.divisionId == 3 && user.branchId == post.branchId}">
+						<c:when test="${sessionUser.divisionId == 3 && sessionUser.branchId == post.branchId}">
 							<input type="hidden" name="postid" value="${post.id}"/>
-							<input type="submit" value="消去">
+							<input type="submit" value="メッセージ削除">
 						</c:when>
 
-						<c:when test="${post.userId == user.id}">
+						<c:when test="${post.userId == sessionUser.id}">
 							<input type="hidden" name="postid" value="${post.id}"/>
-							<input type="submit" value="消去">
+							<input type="submit" value="メッセージ削除">
 						</c:when>
 					</c:choose>
 				</form>
+		</div>
 
+		<div class="comments">
 				<c:forEach items="${comments}" var="comment">
-					<form action="deletecomment" method="post" onClick="return check()">
 						<c:if test="${comment.postId == post.id}">
 							<label for="text">投稿コメント</label><br />
-							<c:out value="${comment.text}" /><br />
+							<c:forEach items="${fn:split(comment.text,'
+')}" var="splitcomment">
+								<c:out value="${splitcomment}" /><br />
+							</c:forEach>
+
+							<c:forEach items="${users}" var="user">
+								<c:if test="${comment.userId == user.id }">
+									<label for="username">投稿者名：</label>
+									<c:out value="${user.name }"/><br />
+								</c:if>
+							</c:forEach>
+
 							<label for="insertdate">投稿日時：</label>
 							<fmt:formatDate value="${comment.insertDate}"
 							pattern="yyyy/MM/dd HH:mm:ss"/><br />
 
+							<form action="deletecomment" method="post" onClick="return check()">
 							<c:choose>
-								<c:when test="${user.divisionId == 2}">
+								<c:when test="${sessionUser.divisionId == 2}">
 										<input type="hidden" name="commentid" value="${comment.id}"/>
-										<input type="submit" value="消去">
+										<input type="submit" value="コメント削除">
 								</c:when>
 
-								<c:when test="${user.divisionId == 3 && user.branchId == comment.branchId}">
+								<c:when test="${sessionUser.divisionId == 3 && sessionUser.branchId == comment.branchId}">
 										<input type="hidden" name="commentid" value="${comment.id}"/>
-										<input type="submit" value="消去">
+										<input type="submit" value="コメント削除">
 								</c:when>
 
-								<c:when test="${comment.userId == user.id}">
+								<c:when test="${comment.userId == sessionUser.id}">
 									<input type="hidden" name="commentid" value="${comment.id}" />
-									<input type="submit" value="消去">
+									<input type="submit" value="コメント削除">
 								</c:when>
 							</c:choose>
-
+							</form>
 						</c:if>
-					</form>
+
 				</c:forEach>
+		</div>
 
 				<form action="comment" method="post">
 					<label for="text">新規コメント</label><br />
-					<c:out value="${sessionPostid}" /><br />
 					<c:if test = "${not empty sessionComment}">
 						<c:if test = "${post.id == sessionPostid}">
 							<textarea name="comment" cols="50" rows="3" class="tweet-box" maxlength="500">${sessionComment}</textarea><br />
@@ -186,14 +203,12 @@ function check(){
 					</c:if>
 
 					<input type="hidden" name="postid" value="${post.id}"/>
-					<input type="hidden" name="userid" value="${user.id}"/>
-					<input type="hidden" name="divisionid" value="${user.divisionId}"/>
-					<input type="hidden" name="branchid" value="${user.branchId}"/>
-					<input type="submit" value="投稿"><br />
-
+					<input type="hidden" name="userid" value="${sessionUser.id}"/>
+					<input type="hidden" name="divisionid" value="${sessionUser.divisionId}"/>
+					<input type="hidden" name="branchid" value="${sessionUser.branchId}"/>
+					<input type="submit" value="コメント投稿"><br />
 				</form>
-			</div>
-		</c:forEach>
+			</c:forEach>
 		<c:remove var="sessionComment" scope="session"/>
 		<c:remove var="sessionPostid" scope="session"/>
 	</div>

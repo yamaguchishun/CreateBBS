@@ -19,6 +19,7 @@ import beans.User;
 import service.BranchService;
 import service.DivisionService;
 import service.UserService;
+import util.TrimUtil;
 
 @WebServlet(urlPatterns = { "/edit" })
 public class EditServlet extends HttpServlet {
@@ -61,6 +62,7 @@ public class EditServlet extends HttpServlet {
 		}
 
 		List<User> users = new UserService().getUser(Integer.parseInt(request.getParameter("userid")));
+		User user = new UserService().getEditUser(Integer.parseInt(request.getParameter("userid")));
 
 		if(users.size()==0){
 			messages.add("無効な値です");
@@ -70,7 +72,8 @@ public class EditServlet extends HttpServlet {
 		}else{
 			request.setAttribute("branches", branches);
 			request.setAttribute("divisions", divisions);
-			request.setAttribute("users", users);
+			request.setAttribute("sessionUser", sessionUser);
+			request.setAttribute("user", user);
 			request.setAttribute("sessionUser",sessionUser);
 			request.getRequestDispatcher("/edit.jsp").forward(request, response);
 			return;
@@ -86,28 +89,35 @@ public class EditServlet extends HttpServlet {
 		List<Division> divisions = new DivisionService().getDivision();
 		List<User> users = new UserService().getUser(Integer.parseInt(request.getParameter("userid")));
 		boolean checkLoginId = new UserService().checkLoginId(request.getParameter("account"),users);
+		User sessionUser = (User) request.getSession().getAttribute("user") ;
 		User user = new User();
-		user.setId(Integer.parseInt(request.getParameter("userid")));
-		user.setName(request.getParameter("name"));
-		user.setBranchId(Integer.parseInt(request.getParameter("branch")));
-		user.setDivisionId(Integer.parseInt(request.getParameter("division")));
-		user.setPassword(request.getParameter("password"));
+
+		if(Integer.parseInt(request.getParameter("userid")) == sessionUser.getId()){
+			user.setId(sessionUser.getId());
+			user.setName(request.getParameter("name"));
+			user.setAccount(request.getParameter("account"));
+			user.setBranchId(sessionUser.getBranchId());
+			user.setDivisionId(sessionUser.getDivisionId());
+			user.setPassword(request.getParameter("password"));
+
+		}else{
+			user.setId(Integer.parseInt(request.getParameter("userid")));
+			user.setName(request.getParameter("name"));
+			user.setAccount(request.getParameter("account"));
+			user.setBranchId(Integer.parseInt(request.getParameter("branch")));
+			user.setDivisionId(Integer.parseInt(request.getParameter("division")));
+			user.setPassword(request.getParameter("password"));
+		}
 
 		if(checkLoginId == false){
 			messages.add("入力したログインIDは既に使用されています");
 			request.setAttribute("branches", branches);
 			request.setAttribute("divisions", divisions);
 			request.setAttribute("errorMessages", messages);
-			request.setAttribute("users",users);
+			request.setAttribute("user",user);
 			request.getRequestDispatcher("/edit.jsp").forward(request, response);
 			return;
-		}else{
-			user.setAccount(request.getParameter("account"));
 		}
-
-		user.setBranchId(Integer.parseInt(request.getParameter("branch")));
-		user.setDivisionId(Integer.parseInt(request.getParameter("division")));
-		user.setPassword(request.getParameter("password"));
 
 		if (isValid(request, messages) == true) {
 			new UserService().update(user);
@@ -117,46 +127,42 @@ public class EditServlet extends HttpServlet {
 			request.setAttribute("branches", branches);
 			request.setAttribute("divisions", divisions);
 			request.setAttribute("errorMessages", messages);
-			request.setAttribute("users",users);
+			request.setAttribute("user",user);
 			request.getRequestDispatcher("/edit.jsp").forward(request, response);
 			return;
 		}
 	}
 
 	private boolean isValid(HttpServletRequest request, List<String> messages) {
-		String account = request.getParameter("account").trim();
-		String password = request.getParameter("password").trim();
-		String confirmation = request.getParameter("confirmation").trim();
-		String name = request.getParameter("name").trim();
-
-		if (StringUtils.isEmpty(name) == true) {
-			messages.add("名前を入力して下さい");
-		}
-
-		if (name == "") {
-			messages.add("名前を入力して下さい");
-		}
-
-		if(10 < name.length()){
-			messages.add("名前は10文字以内で入力して下さい");
-		}
+		String account = TrimUtil.trimWhitespace(request.getParameter("account"));
+		String password = TrimUtil.trimWhitespace(request.getParameter("password"));
+		String confirmation = TrimUtil.trimWhitespace(request.getParameter("confirmation"));
+		String name = TrimUtil.trimWhitespace(request.getParameter("name").trim());
 
 		if (StringUtils.isEmpty(account) == true) {
 			messages.add("ログインIDを入力して下さい");
 		}
 
 		if(account.matches("^[0-9a-zA-Z]{6,20}+$")!=true){
-			messages.add("ログインIDは半角英数字6～20文字以内で入力して下さい");
+			messages.add("【ログインID】入力エラー");
 		}
 
 		if(StringUtils.isEmpty(password) == false){
 			if(password.matches("[ -~｡-ﾟ]{6,20}+")!=true){
-				messages.add("パスワードは半角文字6～20文字以内で入力して下さい");
+				messages.add("【パスワード】入力エラー");
 			}
 		}
 
 		if(password.equals(confirmation)==false){
 			messages.add("パスワードと確認用パスワードが一致していません");
+		}
+
+		if (StringUtils.isEmpty(name) == true) {
+			messages.add("名前を入力して下さい");
+		}
+
+		if(10 < name.length()){
+			messages.add("【名前】入力エラー");
 		}
 
 		if (messages.size() == 0) {

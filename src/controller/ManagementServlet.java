@@ -33,18 +33,18 @@ public class ManagementServlet extends HttpServlet {
 		List<Branch> branches = new BranchService().getBranch();
 		List<Division> divisions = new DivisionService().getDivision();
 
-		if(sessionUser.getDivisionId()==1){
+//		if(sessionUser.getDivisionId()==1){
 			request.setAttribute("sessionUser", sessionUser);
 			request.setAttribute("users", users);
 			request.setAttribute("branches", branches);
 			request.setAttribute("divisions", divisions);
 			request.getRequestDispatcher("/management.jsp").forward(request, response);
 			return;
-		}else{
+/*		}else{
 			messages.add("アクセスエラー");
 			session.setAttribute("errorMessages", messages);
 			response.sendRedirect("./");
 			return;
-		}
+		}*/
 	}
 }

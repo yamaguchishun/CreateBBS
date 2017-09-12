@@ -16,6 +16,7 @@ import org.apache.commons.lang.StringUtils;
 import beans.Post;
 import beans.User;
 import service.PostService;
+import util.TrimUtil;
 
 @WebServlet(urlPatterns = { "/newpost" })
 public class NewPostServlet extends HttpServlet {
@@ -52,6 +53,9 @@ public class NewPostServlet extends HttpServlet {
 			return;
 		} else {
 			session.setAttribute("errorMessages", messages);
+			session.setAttribute("sessionText",request.getParameter("text"));
+			session.setAttribute("sessionSubject",request.getParameter("subject"));
+			session.setAttribute("sessionCategory",request.getParameter("category"));
 			response.sendRedirect("newpost");
 			return;
 		}
@@ -59,16 +63,16 @@ public class NewPostServlet extends HttpServlet {
 
 	private boolean isValid(HttpServletRequest request, List<String> messages) {
 
-		String category = request.getParameter("category").trim();
-		String post = request.getParameter("text").trim();
-		String subject = request.getParameter("subject").trim();
+		String category =TrimUtil.trimWhitespace(request.getParameter("category").trim());
+		String post = TrimUtil.trimWhitespace(request.getParameter("text").trim());
+		String subject = TrimUtil.trimWhitespace(request.getParameter("subject").trim());
 
 		if (StringUtils.isEmpty(category) == true) {
 			messages.add("カテゴリーを入力して下さい");
 		}
 
 		if (10 < category.length()) {
-			messages.add("カテゴリーは10文字以下で入力してください");
+			messages.add("【カテゴリー】入力エラー");
 		}
 
 		if(StringUtils.isEmpty(subject) == true){
@@ -76,7 +80,7 @@ public class NewPostServlet extends HttpServlet {
 		}
 
 		if(30 < subject.length()){
-			messages.add("件名は30文字以下で入力して下さい");
+			messages.add("【件名】入力エラー");
 		}
 
 		if (StringUtils.isEmpty(post) == true) {
@@ -84,7 +88,7 @@ public class NewPostServlet extends HttpServlet {
 		}
 
 		if (1000 < post.length()) {
-			messages.add("本文は1000文字以下で入力してください");
+			messages.add("【本文】入力エラー");
 		}
 
 		if (messages.size() == 0) {

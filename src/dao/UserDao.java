@@ -46,7 +46,7 @@ public class UserDao {
 
 		PreparedStatement ps = null;
 		try {
-			String sql = "SELECT * FROM yamaguchi_shun.users";
+			String sql = "SELECT * FROM yamaguchi_shun.users order by branch_id";
 
 			ps = connection.prepareStatement(sql);
 
@@ -280,6 +280,26 @@ public class UserDao {
 			List<User> userList = toUserList(rs);
 
 			return userList;
+		} catch (SQLException e) {
+			throw new SQLRuntimeException(e);
+		} finally {
+			CloseableUtil.close(ps);
+		}
+	}
+
+	public User getEditUser(Connection connection, int id) {
+
+		PreparedStatement ps = null;
+		try {
+			String sql = "SELECT * FROM yamaguchi_shun.users WHERE id = ?";
+
+			ps = connection.prepareStatement(sql);
+			ps.setInt(1, id);
+
+			ResultSet rs = ps.executeQuery();
+			User user = toUser(rs);
+
+			return user;
 		} catch (SQLException e) {
 			throw new SQLRuntimeException(e);
 		} finally {

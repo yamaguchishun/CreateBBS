@@ -15,6 +15,7 @@ import org.apache.commons.lang.StringUtils;
 
 import beans.Comment;
 import service.CommentService;
+import util.TrimUtil;
 
 @WebServlet(urlPatterns = { "/comment" })
 public class CommentServlet extends HttpServlet {
@@ -29,10 +30,7 @@ public class CommentServlet extends HttpServlet {
 
 		if (isValid(request, messages) == true) {
 			Comment comment = new Comment();
-//			System.out.println(request.getParameter("postid"));
-//			System.out.println(request.getParameter("comment"));
-//			System.out.println(request.getParameter("userid"));
-			comment.setText(request.getParameter("comment"));
+			comment.setText(TrimUtil.trimWhitespace(request.getParameter("comment")));
 			comment.setPostId(Integer.parseInt(request.getParameter("postid")));
 			comment.setDivisionId(Integer.parseInt(request.getParameter("divisionid")));
 			comment.setBranchId(Integer.parseInt(request.getParameter("branchid")));
@@ -52,7 +50,7 @@ public class CommentServlet extends HttpServlet {
 
 	private boolean isValid(HttpServletRequest request, List<String> messages) {
 
-		String comment = request.getParameter("comment").trim();
+		String comment = TrimUtil.trimWhitespace(request.getParameter("comment"));
 
 		if (StringUtils.isEmpty(comment) == true) {
 			messages.add("コメントを入力してください");

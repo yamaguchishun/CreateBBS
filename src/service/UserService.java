@@ -85,6 +85,29 @@ public class UserService {
 		}
 	}
 
+	public User getEditUser(int userId) {
+
+		Connection connection = null;
+		try {
+			connection = getConnection();
+
+			UserDao userDao = new UserDao();
+			User user = userDao.getEditUser(connection, userId);
+
+			commit(connection);
+
+			return user;
+		} catch (RuntimeException e) {
+			rollback(connection);
+			throw e;
+		} catch (Error e) {
+			rollback(connection);
+			throw e;
+		} finally {
+			CloseableUtil.close(connection);
+		}
+	}
+
 	public User checkStatus(int userId) {
 
 		Connection connection = null;

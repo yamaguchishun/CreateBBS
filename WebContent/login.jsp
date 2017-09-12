@@ -7,8 +7,10 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>ログイン</title>
+<link rel="stylesheet" type="text/css" href="./css/schema.css">
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>ログイン</title>
 </head>
 <body>
 <div class="main-contents">
@@ -23,6 +25,7 @@
 		<c:remove var="errorMessages" scope="session"/>
 	</c:if>
 
+	<div class="box">
 	<form action="login" method="post"><br />
 		<label for="account">ログインID</label>
 		<input name="account" id="account"/> <br />
@@ -30,6 +33,7 @@
 		<input name="password" type="password" id="password"/><br />
 		<input type="submit" value="ログイン" /> <br />
 	</form>
+	</div>
 	<div class="copyright">Copyright(c)yamaguchi shun</div>
 	<c:remove var="user" scope="session"/>
 </div>
