@@ -6,7 +6,21 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<link rel="stylesheet" type="text/css" href="./css/schema.css">
+<link rel="stylesheet" type="text/css" href="./css/styles.css">
+<link rel="stylesheet" type="text/css" href="./css/backgrounds.css">
+<link rel="stylesheet" type="text/css" href="./css/buttons.css">
+<link rel="stylesheet" type="text/css" href="./css/forms.css">
+<link rel="stylesheet" type="text/css" href="./css/tables.css">
+<link rel="stylesheet" type="text/css" href="./css/breadcrumbs.css">
+<link rel="stylesheet" type="text/css" href="./css/responsive.css">
+<link rel="stylesheet" type="text/css" href="./css/workless.css">
+<link rel="stylesheet" type="text/css" href="./css/plugins.css">
+<link rel="stylesheet" type="text/css" href="./css/helpers.css">
+<link rel="stylesheet" type="text/css" href="./css/alerts.css">
+<link rel="stylesheet" type="text/css" href="./css/pagination.css">
+<link rel="stylesheet" type="text/css" href="./css/font.css">
+<link rel="stylesheet" type="text/css" href="./css/scaffolding.css">
+
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>ユーザ編集</title>
 </head>
@@ -26,25 +40,27 @@
 
 
 			<form action="edit" method="post">
-				<label for="account">ログインID</label>
-				<input name="account" value="${user.account}" id="account" />
+				<strong>ログインID</strong>
 				<label for="account">(半角英数字6～20文字)</label><br />
+				<input name="account" value="${user.account}" id="input" /><br />
 
-				<label for="password">パスワード</label>
-				<input type="password" name="password" id="password"/>
+
+				<strong>パスワード</strong>
 				<label for="password">(半角文字6～20文字)</label><br />
+				<input type="password" name="password" id="password"/><br />
 
-				<label for="confirmation">パスワード(確認用)</label>
-				<input type="password" name="confirmation" id="confirmation"/>
+				<Strong>パスワード(確認用)</strong>
 				<label for="confirmation">(パスワードを再入力して下さい)</label><br />
+				<input type="password" name="confirmation" id="confirmation"/><br />
 
 				<input type="hidden" name="userid" value="${user.id}" />
-				<label for="name">名前</label>
-				<input name="name" value="${user.name}" id="name"/>
+
+				<strong>名前</strong>
 				<label for="name">(10文字以内)</label><br />
+				<input name="name" value="${user.name}"id="input"/><br />
 
-				<label for="branch">支店名</label>
 
+				<strong>支店名</strong><br />
 				<c:if test="${user.id == sessionUser.id }">
 					<select name="branch">
 						<c:forEach items="${branches}" var="branch">
@@ -71,7 +87,7 @@
 				</select><br />
 				</c:if>
 
-				<label for="division">部署/役職名</label>
+				<strong>部署/役職名</strong><br />
 				<c:if test="${user.id == sessionUser.id }">
 					<select name="division">
 					<c:forEach items="${divisions}" var="division">

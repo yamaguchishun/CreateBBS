@@ -8,7 +8,20 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<link rel="stylesheet" type="text/css" href="./css/schema.css">
+<link rel="stylesheet" type="text/css" href="./css/styles.css">
+<link rel="stylesheet" type="text/css" href="./css/backgrounds.css">
+<link rel="stylesheet" type="text/css" href="./css/buttons.css">
+<link rel="stylesheet" type="text/css" href="./css/forms.css">
+<link rel="stylesheet" type="text/css" href="./css/tables.css">
+<link rel="stylesheet" type="text/css" href="./css/breadcrumbs.css">
+<link rel="stylesheet" type="text/css" href="./css/responsive.css">
+<link rel="stylesheet" type="text/css" href="./css/workless.css">
+<link rel="stylesheet" type="text/css" href="./css/plugins.css">
+<link rel="stylesheet" type="text/css" href="./css/helpers.css">
+<link rel="stylesheet" type="text/css" href="./css/alerts.css">
+<link rel="stylesheet" type="text/css" href="./css/pagination.css">
+<link rel="stylesheet" type="text/css" href="./css/font.css">
+<link rel="stylesheet" type="text/css" href="./css/scaffolding.css">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>ホーム</title>
 <script type="text/javascript">
@@ -46,12 +59,12 @@ function check(){
 		<c:if test="${sessionUser.divisionId == 1 }">
 		<a href="management">ユーザ管理</a><br />
 		</c:if>
-		<a href="logout">ログアウト</a><br />
+		<a href="logout">ログアウト</a><br /><br />
 	</div>
 
 
 	<form action="./" method="get">
-		<label for="category">カテゴリー</label><br />
+		<em>カテゴリー</em><br />
 		<select name="category">
 			<option value="">全カテゴリー</option>
 				<c:forEach items="${categorys}" var="category">
@@ -62,29 +75,23 @@ function check(){
 						<option value="${category.category}">${category.category}</option>
 					</c:if>
 				</c:forEach>
-				<c:remove var="sessionCategory" scope="session"/>
+			<c:remove var="sessionCategory" scope="session"/>
 		</select><br />
 
 
-		<label for="startdate">開始日</label><br />
+		<em>開始日</em><br />
 		<c:if test="${ not empty startdates }">
-			<div class="startdate">
-				<input type="date"  value="${startdates}"  name="startdate" id="startdate" /><br />
-			</div>
+			<input type="date"  value="${startdates}"  name="startdate" id="startdate" /><br />
 		</c:if>
 
 		<c:if test="${ empty startdates }">
-			<div class="startdate">
-				<input type="date"   name="startdate" id="startdate" /><br />
-			</div>
+			<input type="date"   name="startdate" id="startdate" /><br />
 		</c:if>
 		<c:remove var="startdates" scope="session"/>
 
-		<label for="enddate">終了日</label><br />
+		<em>終了日</em><br />
 		<c:if test="${ not empty enddates }">
-			<div class="enddate">
-				<input type="date"  value="${enddates}"  name="enddate" id="enddate" /><br />
-			</div>
+			<input type="date"  value="${enddates}"  name="enddate" id="enddate" /><br />
 		</c:if>
 
 		<c:if test="${ empty enddates }">
@@ -94,30 +101,31 @@ function check(){
 		</c:if>
 
 		<c:remove var="enddates" scope="session"/>
-		<input type="submit" value="絞込"><br />
+		<input type="submit" value="絞込"><br /><br />
 	</form>
 
 	<c:forEach items="${posts}" var="post">
 		<div class="posts">
 			<div class="text">
-				<label for="subject">件名</label>
-				<c:out value="${post.subject}"/><br />
+				<strong>件名</strong><br />
+				<input value="${post.subject}" id="subject" /><br />
 
-				<label for="text">本文</label>
+				<strong>本文</strong><br />
+				<div id="body">
 				<c:forEach items="${fn:split(post.text,'
 ')}" var="splitpost">
-					<c:out value="${splitpost}" /><br />
+					<c:out value="${splitpost}"/><br />
+				</c:forEach>
+				</div>
+
+				<c:forEach items="${users}" var="user">
+					<c:if test="${post.userId == user.id}">
+						<em>投稿者：${user.name}</em>
+					</c:if>
 				</c:forEach>
 
-				<c:if test="${post.userId == sessionUser.id}">
-					<label for="insertdate">投稿者：${sessionUser.name}</label>
-					<c:out value="${sessionUser.name}"/><br />
-				</c:if>
-
 				<div class="date">
-					<label for="insertdate">投稿日時：</label>
-					<fmt:formatDate value="${post.insertDate}"
-						pattern="yyyy/MM/dd HH:mm:ss" /><br />
+					<em>投稿日時：${post.insertDate}</em><br />
 				</div>
 			</div>
 
@@ -141,51 +149,52 @@ function check(){
 				</form>
 		</div>
 
-		<div class="comments">
+
+
 				<c:forEach items="${comments}" var="comment">
 						<c:if test="${comment.postId == post.id}">
-							<label for="text">投稿コメント</label><br />
+							<br /><strong>投稿コメント</strong><br />
+
+							<div id="comments">
 							<c:forEach items="${fn:split(comment.text,'
 ')}" var="splitcomment">
 								<c:out value="${splitcomment}" /><br />
 							</c:forEach>
+							</div>
 
 							<c:forEach items="${users}" var="user">
 								<c:if test="${comment.userId == user.id }">
-									<label for="username">投稿者名：</label>
-									<c:out value="${user.name }"/><br />
+									<em>投稿者名：${user.name }</em><br />
 								</c:if>
 							</c:forEach>
 
-							<label for="insertdate">投稿日時：</label>
-							<fmt:formatDate value="${comment.insertDate}"
-							pattern="yyyy/MM/dd HH:mm:ss"/><br />
+							<em>投稿日時：${comment.insertDate}</em><br />
 
 							<form action="deletecomment" method="post" onClick="return check()">
 							<c:choose>
 								<c:when test="${sessionUser.divisionId == 2}">
 										<input type="hidden" name="commentid" value="${comment.id}"/>
-										<input type="submit" value="コメント削除">
+										<input type="submit" value="コメント削除"><br />
 								</c:when>
 
 								<c:when test="${sessionUser.divisionId == 3 && sessionUser.branchId == comment.branchId}">
 										<input type="hidden" name="commentid" value="${comment.id}"/>
-										<input type="submit" value="コメント削除">
+										<input type="submit" value="コメント削除"><br />
 								</c:when>
 
 								<c:when test="${comment.userId == sessionUser.id}">
 									<input type="hidden" name="commentid" value="${comment.id}" />
-									<input type="submit" value="コメント削除">
+									<input type="submit" value="コメント削除"><br />
 								</c:when>
 							</c:choose>
 							</form>
 						</c:if>
 
 				</c:forEach>
-		</div>
 
+				<br />
 				<form action="comment" method="post">
-					<label for="text">新規コメント</label><br />
+					<strong>新規コメント</strong><br />
 					<c:if test = "${not empty sessionComment}">
 						<c:if test = "${post.id == sessionPostid}">
 							<textarea name="comment" cols="50" rows="3" class="tweet-box" maxlength="500">${sessionComment}</textarea><br />
@@ -206,7 +215,7 @@ function check(){
 					<input type="hidden" name="userid" value="${sessionUser.id}"/>
 					<input type="hidden" name="divisionid" value="${sessionUser.divisionId}"/>
 					<input type="hidden" name="branchid" value="${sessionUser.branchId}"/>
-					<input type="submit" value="コメント投稿"><br />
+					<input type="submit" value="コメント投稿"><br /><br />
 				</form>
 			</c:forEach>
 		<c:remove var="sessionComment" scope="session"/>

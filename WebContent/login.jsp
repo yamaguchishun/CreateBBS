@@ -7,7 +7,20 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<link rel="stylesheet" type="text/css" href="./css/schema.css">
+<link rel="stylesheet" type="text/css" href="./css/styles.css">
+<link rel="stylesheet" type="text/css" href="./css/backgrounds.css">
+<link rel="stylesheet" type="text/css" href="./css/buttons.css">
+<link rel="stylesheet" type="text/css" href="./css/forms.css">
+<link rel="stylesheet" type="text/css" href="./css/tables.css">
+<link rel="stylesheet" type="text/css" href="./css/breadcrumbs.css">
+<link rel="stylesheet" type="text/css" href="./css/responsive.css">
+<link rel="stylesheet" type="text/css" href="./css/workless.css">
+<link rel="stylesheet" type="text/css" href="./css/plugins.css">
+<link rel="stylesheet" type="text/css" href="./css/helpers.css">
+<link rel="stylesheet" type="text/css" href="./css/alerts.css">
+<link rel="stylesheet" type="text/css" href="./css/pagination.css">
+<link rel="stylesheet" type="text/css" href="./css/font.css">
+<link rel="stylesheet" type="text/css" href="./css/scaffolding.css">
 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>ログイン</title>

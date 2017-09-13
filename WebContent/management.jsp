@@ -7,7 +7,21 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<link rel="stylesheet" type="text/css" href="./css/schema.css">
+<link rel="stylesheet" type="text/css" href="./css/styles.css">
+<link rel="stylesheet" type="text/css" href="./css/backgrounds.css">
+<link rel="stylesheet" type="text/css" href="./css/buttons.css">
+<link rel="stylesheet" type="text/css" href="./css/forms.css">
+<link rel="stylesheet" type="text/css" href="./css/tables.css">
+<link rel="stylesheet" type="text/css" href="./css/breadcrumbs.css">
+<link rel="stylesheet" type="text/css" href="./css/responsive.css">
+<link rel="stylesheet" type="text/css" href="./css/workless.css">
+<link rel="stylesheet" type="text/css" href="./css/plugins.css">
+<link rel="stylesheet" type="text/css" href="./css/helpers.css">
+<link rel="stylesheet" type="text/css" href="./css/alerts.css">
+<link rel="stylesheet" type="text/css" href="./css/pagination.css">
+<link rel="stylesheet" type="text/css" href="./css/font.css">
+<link rel="stylesheet" type="text/css" href="./css/scaffolding.css">
+
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>ユーザ管理</title>
 
@@ -31,8 +45,7 @@ function check(){
 <body>
 <div class="main-contents">
 	<div class="link">
-		<a href="signup">新規登録</a><br />
-		<a href="./">戻る</a>
+		<a href="signup">新規登録</a><br /><br />
 	</div>
 
 	<c:if test="${ not empty errorMessages }">
@@ -50,8 +63,8 @@ function check(){
 		<table class="u-full-width">
 			<thead>
 				<tr>
-    				<th>名前</th>
     				<th>アカウント名</th>
+    				<th>名前</th>
     				<th>支店名</th>
     				<th>部署/役職名</th>
     				<th>ユーザ編集</th>
@@ -62,18 +75,18 @@ function check(){
  				<c:forEach items="${users}" var="user">
  					<tbody>
 						<tr>
-    						<td><input type=text readonly name="name" value="${user.name}" /></td>
-    						<td><input type=text readonly name="account" value="${user.account}" /></td>
+    						<td><input readonly name="account" value="${user.account}" id="output" /></td>
+    						<td><input readonly name="name" value="${user.name}" id="output" /></td>
 
 							<c:forEach items="${branches}" var="branch">
 								<c:if test="${user.branchId== branch.id}">
-    								<td><input type=text readonly name="branch" value="${branch.name}" /></td>
+    								<td><input readonly name="branch" value="${branch.name}" id="output" /></td>
     							</c:if>
     						</c:forEach>
 
     						<c:forEach items="${divisions}" var="division">
 								<c:if test="${user.divisionId== division.id}">
-    								<td><input type=text readonly name="branch" value="${division.name}" /></td>
+    								<td><input readonly name="division" value="${division.name}" id="output" /></td>
     							</c:if>
     						</c:forEach>
 
@@ -86,7 +99,7 @@ function check(){
 
 									<c:if test="${user.id != sessionUser.id}">
 										<c:if test="${user.isWorking == 0}">
-											<input type="submit"name="status" value="停止"/>
+											<button class="stop" type="submit"name="status">停止</button>
 										</c:if>
 									</c:if>
 
@@ -97,7 +110,7 @@ function check(){
 									</c:if>
 
 									<c:if test="${user.isWorking == 1}">
-										<input type="submit"name="status" value="復活"/>
+										<button class="start" type="submit"name="status">復活</button>
 									</c:if>
 								</form>
 							</td>
@@ -107,5 +120,6 @@ function check(){
 			</table>
 			</div>
 		</div>
+		<a href="./">戻る</a>
 	</body>
 </html>

@@ -28,7 +28,11 @@ public class LoginFilter implements Filter{
 			User sessionUser = (User) ((HttpServletRequest) request).getSession().getAttribute("user");
 
 			if (path.equals("/login") || path.equals("style.css")
-					|| path.equals("skeleton.css") || path.equals("normalize.css") ){
+					|| path.equals("backgrounds.css") || path.equals("buttons.css")
+					|| path.equals("forms.css") || path.equals("breadcrumbs.css") || path.equals("tables.css")
+					|| path.equals("responsive.css") || path.equals("responsive.css") || path.equals("workless.css")
+					|| path.equals("plugins.css") || path.equals("helpers.css") || path.equals("alerts.css")
+					|| path.equals("pagination.css") || path.equals("font.css") || path.equals("scaffolding.css")){
 				chain.doFilter(request, response);
 			}else{
 				if(sessionUser != null){
