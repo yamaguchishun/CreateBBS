@@ -66,7 +66,7 @@ function check(){
 	<form action="./" method="get">
 		<em>カテゴリー</em><br />
 		<select name="category">
-			<option value="">全カテゴリー</option>
+			<option value="">--こちらから選択して下さい--</option>
 				<c:forEach items="${categorys}" var="category">
 					<c:if test="${category.category == sessionCategory}">
 						<option value="${category.category}"selected>${category.category}</option>
@@ -114,12 +114,7 @@ function check(){
 				<input value="${post.subject}" id="subject" /><br />
 
 				<strong>本文</strong><br />
-				<div id="body">
-				<c:forEach items="${fn:split(post.text,'
-')}" var="splitpost">
-					<c:out value="${splitpost}"/><br />
-				</c:forEach>
-				</div>
+				<textarea cols="50" rows="3" maxlength="1000" >${post.text}</textarea><br />
 
 				<c:forEach items="${users}" var="user">
 					<c:if test="${post.userId == user.id}">
@@ -158,12 +153,8 @@ function check(){
 						<c:if test="${comment.postId == post.id}">
 							<br /><strong>投稿コメント</strong><br />
 
-							<div id="comments">
-							<c:forEach items="${fn:split(comment.text,'
-')}" var="splitcomment">
-								<c:out value="${splitcomment}" /><br />
-							</c:forEach>
-							</div>
+
+							<textarea cols="50" rows="3" maxlength="500" >${comment.text}</textarea><br />
 
 							<c:forEach items="${users}" var="user">
 								<c:if test="${comment.userId == user.id }">
@@ -176,13 +167,13 @@ function check(){
 							<form action="deletecomment" method="post" onClick="return check()">
 							<c:choose>
 								<c:when test="${sessionUser.divisionId == 2}">
-										<input type="hidden" name="commentid" value="${comment.id}"/>
-										<input type="submit" value="コメント削除"><br />
+									<input type="hidden" name="commentid" value="${comment.id}"/>
+									<input type="submit" value="コメント削除"><br />
 								</c:when>
 
 								<c:when test="${sessionUser.divisionId == 3 && sessionUser.branchId == comment.branchId}">
-										<input type="hidden" name="commentid" value="${comment.id}"/>
-										<input type="submit" value="コメント削除"><br />
+									<input type="hidden" name="commentid" value="${comment.id}"/>
+									<input type="submit" value="コメント削除"><br />
 								</c:when>
 
 								<c:when test="${comment.userId == sessionUser.id}">

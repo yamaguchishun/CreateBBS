@@ -24,7 +24,6 @@
 </head>
 <body>
 	<div class="main-contents">
-
 		<c:if test="${ not empty errorMessages }">
 			<div class="errorMessages">
 				<ul>

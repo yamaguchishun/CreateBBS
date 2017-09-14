@@ -99,7 +99,7 @@ function check(){
 
 									<c:if test="${user.id != sessionUser.id}">
 										<c:if test="${user.isWorking == 0}">
-											<button class="stop" type="submit"name="status">停止</button>
+											<button type="submit"name="status">停止</button>
 										</c:if>
 									</c:if>
 
@@ -110,7 +110,7 @@ function check(){
 									</c:if>
 
 									<c:if test="${user.isWorking == 1}">
-										<button class="start" type="submit"name="status">復活</button>
+										<button type="submit"name="status">復活</button>
 									</c:if>
 								</form>
 							</td>

@@ -42,11 +42,13 @@
 	<form action="login" method="post"><br />
 		<strong>ログインID</strong><br />
 		<input name="account" id="input"/> <br />
+
 		<strong>パスワード</strong><br />
 		<input name="password" type="password" id="password"/><br />
 		<input type="submit" value="ログイン" /> <br />
 	</form>
 	</div>
+
 	<div class="copyright">Copyright(c)yamaguchi shun</div>
 	<c:remove var="user" scope="session"/>
 </div>

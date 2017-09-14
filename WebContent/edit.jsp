@@ -20,7 +20,6 @@
 <link rel="stylesheet" type="text/css" href="./css/pagination.css">
 <link rel="stylesheet" type="text/css" href="./css/font.css">
 <link rel="stylesheet" type="text/css" href="./css/scaffolding.css">
-
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>ユーザ編集</title>
 </head>
@@ -38,85 +37,82 @@
 		<c:remove var="errorMessages" scope="session"/>
 	</c:if>
 
+		<form action="edit" method="post">
+			<strong>ログインID</strong>
+			<label for="account">(半角英数字6～20文字)</label><br />
+			<input name="account" value="${user.account}" id="input" /><br />
 
-			<form action="edit" method="post">
-				<strong>ログインID</strong>
-				<label for="account">(半角英数字6～20文字)</label><br />
-				<input name="account" value="${user.account}" id="input" /><br />
+			<strong>パスワード</strong>
+			<label for="password">(半角文字6～20文字)</label><br />
+			<input type="password" name="password" id="password"/><br />
 
+			<Strong>パスワード(確認用)</strong>
+			<label for="confirmation">(パスワードを再入力して下さい)</label><br />
+			<input type="password" name="confirmation" id="confirmation"/><br />
 
-				<strong>パスワード</strong>
-				<label for="password">(半角文字6～20文字)</label><br />
-				<input type="password" name="password" id="password"/><br />
+			<input type="hidden" name="userid" value="${user.id}" />
 
-				<Strong>パスワード(確認用)</strong>
-				<label for="confirmation">(パスワードを再入力して下さい)</label><br />
-				<input type="password" name="confirmation" id="confirmation"/><br />
+			<strong>名前</strong>
+			<label for="name">(10文字以内)</label><br />
+			<input name="name" value="${user.name}"id="input"/><br />
 
-				<input type="hidden" name="userid" value="${user.id}" />
-
-				<strong>名前</strong>
-				<label for="name">(10文字以内)</label><br />
-				<input name="name" value="${user.name}"id="input"/><br />
-
-
-				<strong>支店名</strong><br />
-				<c:if test="${user.id == sessionUser.id }">
-					<select name="branch">
-						<c:forEach items="${branches}" var="branch">
-							<c:if test="${user.branchId == branch.id}">
-								<option value="${branch.id}" >${branch.name}</option>
-							</c:if>
-						</c:forEach>
-					</select><br />
-				</c:if>
-
-				<c:if test="${user.id != sessionUser.id }">
+			<strong>支店名</strong><br />
+			<c:if test="${user.id == sessionUser.id }">
 				<select name="branch">
 					<c:forEach items="${branches}" var="branch">
-						<c:choose>
-							<c:when test="${user.branchId == branch.id}">
-								<option value="${branch.id}"selected>${branch.name}</option>
-							</c:when>
-
-							<c:when test="${user.branchId != branch.id}">
-								<option value="${branch.id}">${branch.name}</option>
-							</c:when>
-						</c:choose>
+						<c:if test="${user.branchId == branch.id}">
+							<option value="${branch.id}" >${branch.name}</option>
+						</c:if>
 					</c:forEach>
 				</select><br />
-				</c:if>
+			</c:if>
 
-				<strong>部署/役職名</strong><br />
-				<c:if test="${user.id == sessionUser.id }">
-					<select name="division">
+			<c:if test="${user.id != sessionUser.id }">
+			<select name="branch">
+				<c:forEach items="${branches}" var="branch">
+					<c:choose>
+						<c:when test="${user.branchId == branch.id}">
+							<option value="${branch.id}"selected>${branch.name}</option>
+						</c:when>
+
+						<c:when test="${user.branchId != branch.id}">
+							<option value="${branch.id}">${branch.name}</option>
+						</c:when>
+					</c:choose>
+				</c:forEach>
+			</select><br />
+			</c:if>
+
+			<strong>部署/役職名</strong><br />
+			<c:if test="${user.id == sessionUser.id }">
+				<select name="division">
 					<c:forEach items="${divisions}" var="division">
 						<c:if test="${user.divisionId == division.id}">
 							<option value="${division.id}"selected>${division.name}</option>
 						</c:if>
 					</c:forEach>
 				</select><br />
-				</c:if>
+			</c:if>
 
-				<c:if test="${user.id != sessionUser.id }">
-					<select name="division">
-						<c:forEach items="${divisions}" var="division">
-							<c:choose>
-								<c:when test="${user.divisionId == division.id}">
-									<option value="${division.id}"selected>${division.name}</option>
-								</c:when>
+			<c:if test="${user.id != sessionUser.id }">
+				<select name="division">
+					<c:forEach items="${divisions}" var="division">
+						<c:choose>
+							<c:when test="${user.divisionId == division.id}">
+								<option value="${division.id}"selected>${division.name}</option>
+							</c:when>
 
-								<c:when test="${user.divisionId != division.id}">
-									<option value="${division.id}">${division.name}</option>
-								</c:when>
-							</c:choose>
-						</c:forEach>
-					</select><br />
-				</c:if>
+							<c:when test="${user.divisionId != division.id}">
+								<option value="${division.id}">${division.name}</option>
+							</c:when>
+						</c:choose>
+					</c:forEach>
+				</select><br />
+			</c:if>
 
-				<c:remove var="sessionUser" scope="session"/>
-				<input type="submit" value="更新" /> <br />
-			</form>
+			<c:remove var="sessionUser" scope="session"/>
+			<input type="submit" value="更新" /> <br />
+		</form>
 		<a href="management">戻る</a>
 </div>
 
