@@ -58,12 +58,36 @@ INSERT INTO
 		branch_id,
 		is_Working
 		)VALUES(
-		'admin01',
-		'管理者',
-		'admin01',
-		1,
-		1,
-		0)
+			'admin01',
+			'総務',
+			'admin01',
+			1,
+			1,
+			0),
+			('admin02',
+			'情報セキュリティ部',
+			'admin02',
+			2,
+			1,
+			0),
+			('admin02',
+			'情報セキュリティ部',
+			'admin02',
+			2,
+			1,
+			0),
+			('支店長A',
+			'支店長A',
+			'shitenchou',
+			3,
+			2,
+			0),
+			('社員A',
+			'社員A',
+			'shaina',
+			4,
+			2,
+			0)
 		
 		
 INSERT INTO 
