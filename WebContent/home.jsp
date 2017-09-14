@@ -107,6 +107,9 @@ function check(){
 	<c:forEach items="${posts}" var="post">
 		<div class="posts">
 			<div class="text">
+				<strong>カテゴリー</strong><br />
+				<input value="${post.category}" id="subject" /><br />
+
 				<strong>件名</strong><br />
 				<input value="${post.subject}" id="subject" /><br />
 
@@ -197,18 +200,18 @@ function check(){
 					<strong>新規コメント</strong><br />
 					<c:if test = "${not empty sessionComment}">
 						<c:if test = "${post.id == sessionPostid}">
-							<textarea name="comment" cols="50" rows="3" class="tweet-box" maxlength="500">${sessionComment}</textarea><br />
+							<textarea name="comment" cols="50" rows="3" class="tweet-box" maxlength="500" wrap="hard">${sessionComment}</textarea><br />
 						</c:if>
 					</c:if>
 
 					<c:if test = "${not empty sessionComment}">
 						<c:if test = "${post.id != sessionPostid}">
-							<textarea name="comment" cols="50" rows="3" class="tweet-box" maxlength="500"></textarea><br />
+							<textarea name="comment" cols="50" rows="3" class="tweet-box" maxlength="500" wrap="hard"></textarea><br />
 						</c:if>
 					</c:if>
 
 					<c:if test = "${empty sessionComment}">
-						<textarea name="comment" cols="50" rows="3" class="tweet-box" maxlength="500"></textarea><br />
+						<textarea name="comment" cols="50" rows="3" class="tweet-box" maxlength="500" wrap="hard"></textarea><br />
 					</c:if>
 
 					<input type="hidden" name="postid" value="${post.id}"/>

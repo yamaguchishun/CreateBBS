@@ -8,7 +8,7 @@ create table
 		division_id INT,
 		is_working TINYINT UNSIGNED,
 		insert_date TIMESTAMP,
-		update_date CURRENT_TIMESTAMP)
+		update_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP)
 
 
 create table 
@@ -39,7 +39,7 @@ create table
 		id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
 		name varchar(20),
 		insert_date TIMESTAMP,
-		update_date CURRENT_TIMESTAMP)
+		update_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP)
 
 
 create table 
@@ -47,5 +47,35 @@ create table
 		id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
 		name varchar(20),
 		insert_date TIMESTAMP,
-		update_date CURRENT_TIMESTAMP)
+		update_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP)
 
+INSERT INTO 
+	yamaguchi_shun.users (
+		account,
+		name,
+		password,
+		division_id,
+		branch_id,
+		is_Working
+		)VALUES(
+		'admin01',
+		'ä«óùé“',
+		'admin01',
+		1,
+		1,
+		0)
+		
+		
+INSERT INTO 
+	yamaguchi_shun.division (
+		name) value('ëçñ±ïî'),
+					('èÓïÒÉZÉLÉÖÉäÉeÉBïî'),
+					('éxìXí∑'),
+					('é–àı')
+		
+INSERT INTO 
+	yamaguchi_shun.branches (
+		name) value('ñ{é–'),
+					('éxìXA'),
+					('éxìXB'),
+					('éxìXC')

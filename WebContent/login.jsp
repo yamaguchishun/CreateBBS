@@ -40,9 +40,9 @@
 
 	<div class="box">
 	<form action="login" method="post"><br />
-		<label for="account">ログインID</label>
-		<input name="account" id="account"/> <br />
-		<label for="password">パスワード</label>
+		<strong>ログインID</strong><br />
+		<input name="account" id="input"/> <br />
+		<strong>パスワード</strong><br />
 		<input name="password" type="password" id="password"/><br />
 		<input type="submit" value="ログイン" /> <br />
 	</form>

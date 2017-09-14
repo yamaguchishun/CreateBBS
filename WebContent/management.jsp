@@ -45,7 +45,7 @@ function check(){
 <body>
 <div class="main-contents">
 	<div class="link">
-		<a href="signup">新規登録</a><br /><br />
+		<br /><a href="signup">新規登録</a><br /><br />
 	</div>
 
 	<c:if test="${ not empty errorMessages }">
@@ -105,7 +105,7 @@ function check(){
 
 									<c:if test="${user.id == sessionUser.id}">
 										<c:if test="${user.isWorking == 0}">
-											<input type="submit"name="status" disabled value="ログイン中"/>
+											<input type="submit"name="status" disabled value="-"/>
 										</c:if>
 									</c:if>
 

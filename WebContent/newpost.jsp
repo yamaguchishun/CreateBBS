@@ -67,10 +67,10 @@
 		<strong>本文</strong>
 		<label for="text">(1000文字以下)</label><br />
 		<c:if test="${ not empty sessionText }">
-			<textarea name="text" cols="50" rows="10" class="tweet-box" maxlength="1000">${sessionText}</textarea><br />
+			<textarea name="text" cols="50" rows="10" class="tweet-box" maxlength="1000" wrap="hard" >${sessionText}</textarea><br />
 		</c:if>
 		<c:if test="${empty sessionText }">
-			<textarea name="text" cols="50" rows="10" class="tweet-box" maxlength="1000"></textarea><br />
+			<textarea name="text" cols="50" rows="10" class="tweet-box" maxlength="1000" wrap="hard" ></textarea><br />
 		</c:if>
 		<c:remove var="sessionText" scope="session"/>
 		<input type="submit" value="投稿"><br />
