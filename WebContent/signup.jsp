@@ -90,11 +90,11 @@
 						<c:forEach items="${divisions}" var="division">
 							<c:choose>
 								<c:when test="${newUser.divisionId == division.id}">
-									<option value="${division.id}"selected>${division.name}</option>
+									<option value="${division.id}"selected><c:out value="${division.name}"/></option>
 								</c:when>
 
 					<c:when test="${newUser.divisionId != division.id}">
-						<option value="${division.id}">${division.name}</option>
+						<option value="${division.id}"><c:out value="${division.name}"/></option>
 					</c:when>
 				</c:choose>
 			</c:forEach>
@@ -106,11 +106,11 @@
 						<c:forEach items="${divisions}" var="division">
 							<c:choose>
 								<c:when test="${user.divisionId == division.id}">
-									<option value="${division.id}"selected>${division.name}</option>
+									<option value="${division.id}"selected><c:out value="${division.name}"/></option>
 								</c:when>
 
 					<c:when test="${user.divisionId != division.id}">
-						<option value="${division.id}">${division.name}</option>
+						<option value="${division.id}"><c:out value="${division.name}"/></option>
 					</c:when>
 				</c:choose>
 			</c:forEach>

@@ -11,7 +11,7 @@
 <link rel="stylesheet" type="text/css" href="./css/styles.css">
 <link rel="stylesheet" type="text/css" href="./css/backgrounds.css">
 <link rel="stylesheet" type="text/css" href="./css/buttons.css">
-<link rel="stylesheet" type="text/css" href="./css/forms.css">
+<link rel="stylesheet" type="text/css" href="./css/forms.css">y
 <link rel="stylesheet" type="text/css" href="./css/tables.css">
 <link rel="stylesheet" type="text/css" href="./css/breadcrumbs.css">
 <link rel="stylesheet" type="text/css" href="./css/responsive.css">
@@ -69,10 +69,10 @@ function check(){
 			<option value="">--こちらから選択して下さい--</option>
 				<c:forEach items="${categorys}" var="category">
 					<c:if test="${category.category == sessionCategory}">
-						<option value="${category.category}"selected>${category.category}</option>
+						<option value="${category.category}"selected><c:out value="${category.category}"/></option>
 					</c:if>
 					<c:if test="${category.category != sessionCategory}">
-						<option value="${category.category}">${category.category}</option>
+						<option value="${category.category}"><c:out value="${category.category}"/></option>
 					</c:if>
 				</c:forEach>
 			<c:remove var="sessionCategory" scope="session"/>

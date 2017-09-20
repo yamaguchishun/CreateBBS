@@ -61,7 +61,7 @@
 				<select name="branch">
 					<c:forEach items="${branches}" var="branch">
 						<c:if test="${user.branchId == branch.id}">
-							<option value="${branch.id}" >${branch.name}</option>
+							<option value="${branch.id}" ><c:out value="${branch.name}"/></option>
 						</c:if>
 					</c:forEach>
 				</select><br />
@@ -72,11 +72,11 @@
 				<c:forEach items="${branches}" var="branch">
 					<c:choose>
 						<c:when test="${user.branchId == branch.id}">
-							<option value="${branch.id}"selected>${branch.name}</option>
+							<option value="${branch.id}"selected><c:out value="${branch.name}"/></option>
 						</c:when>
 
 						<c:when test="${user.branchId != branch.id}">
-							<option value="${branch.id}">${branch.name}</option>
+							<option value="${branch.id}"><c:out value="${branch.name}"/></option>
 						</c:when>
 					</c:choose>
 				</c:forEach>
@@ -88,7 +88,7 @@
 				<select name="division">
 					<c:forEach items="${divisions}" var="division">
 						<c:if test="${user.divisionId == division.id}">
-							<option value="${division.id}"selected>${division.name}</option>
+							<option value="${division.id}"selected><c:out value="${division.name}"/></option>
 						</c:if>
 					</c:forEach>
 				</select><br />
@@ -99,11 +99,11 @@
 					<c:forEach items="${divisions}" var="division">
 						<c:choose>
 							<c:when test="${user.divisionId == division.id}">
-								<option value="${division.id}"selected>${division.name}</option>
+								<option value="${division.id}"selected><c:out value="${division.name}"/></option>
 							</c:when>
 
 							<c:when test="${user.divisionId != division.id}">
-								<option value="${division.id}">${division.name}</option>
+								<option value="${division.id}"><c:out value="${division.name}"/></option>
 							</c:when>
 						</c:choose>
 					</c:forEach>
