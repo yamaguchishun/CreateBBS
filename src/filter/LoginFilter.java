@@ -1,8 +1,6 @@
 package filter;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -13,7 +11,6 @@ import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import beans.User;
 import service.UserService;
@@ -22,9 +19,7 @@ import service.UserService;
 public class LoginFilter implements Filter{
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain){
 		try{
-			HttpSession session = ((HttpServletRequest) request).getSession();
 			String path = ((HttpServletRequest)request).getServletPath();
-			List<String> messages = new ArrayList<String>();
 			User sessionUser = (User) ((HttpServletRequest) request).getSession().getAttribute("user");
 
 			if(path.equals("/login") || path.matches("/css/.*.css$")) {
@@ -43,7 +38,6 @@ public class LoginFilter implements Filter{
 					return;
 				}
 			}
-
 
 		}catch (ServletException se){
 		}catch (IOException e){

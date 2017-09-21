@@ -9,7 +9,6 @@ import java.util.List;
 import beans.Comment;
 import dao.CommentDao;
 
-
 public class CommentService {
 	public void register(Comment Comment,int userid){
 

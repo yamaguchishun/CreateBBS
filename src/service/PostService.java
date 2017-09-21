@@ -42,36 +42,6 @@ public class PostService {
 
 	}
 
-	/*private static final int LIMIT_NUM = 1000;
-	public List<Post>getMesaage(String startdate,String enddate){
-		Connection connection = null;
-		try{
-			connection = getConnection();
-
-			PostDao postDao = new PostDao();
-			List<Post> ret = postDao.getPost(connection,LIMIT_NUM,startdate,enddate);
-			commit(connection);
-			return ret;
-		}catch(RuntimeException e){
-			rollback(connection);
-			throw e;
-		}catch(Error e){
-			rollback(connection);
-			throw e;
-		}finally{
-			try{
-				if(connection !=null){
-					close(connection);
-				}
-			}catch(RuntimeException e){
-				rollback(connection);
-				throw e;
-			}catch(Error e){
-				rollback(connection);
-				throw e;
-			}
-		}
-	}*/
 
 	public List<Post>getMesaage(String startdate,String enddate,String category){
 		Connection connection = null;

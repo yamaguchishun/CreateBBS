@@ -63,9 +63,7 @@ public class PostDao {
 	public  List<Post> getPost(Connection connection,
 			String startdate,String enddate,String category){
 		PreparedStatement ps = null;
-//		System.out.println(startdate);
-//		System.out.println(enddate);
-//		System.out.println(category);
+
 		try{
 			StringBuilder sql = new StringBuilder();
 			if(category!=null){

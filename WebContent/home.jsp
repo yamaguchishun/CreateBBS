@@ -11,7 +11,7 @@
 <link rel="stylesheet" type="text/css" href="./css/styles.css">
 <link rel="stylesheet" type="text/css" href="./css/backgrounds.css">
 <link rel="stylesheet" type="text/css" href="./css/buttons.css">
-<link rel="stylesheet" type="text/css" href="./css/forms.css">y
+<link rel="stylesheet" type="text/css" href="./css/forms.css">
 <link rel="stylesheet" type="text/css" href="./css/tables.css">
 <link rel="stylesheet" type="text/css" href="./css/breadcrumbs.css">
 <link rel="stylesheet" type="text/css" href="./css/responsive.css">
@@ -25,7 +25,6 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>ホーム</title>
 <script type="text/javascript">
-<!--
 
 function check(){
 	if(window.confirm('実行します。よろしいですか？')){
@@ -37,7 +36,6 @@ function check(){
 	}
 }
 
-// -->
 </script>
 
 </head>
@@ -57,7 +55,7 @@ function check(){
 	<div class="main-contents">
 		<a href="newpost">新規投稿</a><br />
 		<c:if test="${sessionUser.divisionId == 1 }">
-		<a href="management">ユーザ管理</a><br />
+			<a href="management">ユーザ管理</a><br />
 		</c:if>
 		<a href="logout">ログアウト</a><br /><br />
 	</div>

@@ -146,7 +146,6 @@ public class UserDao {
 			sql.append(", ?");
 			sql.append(", ?");
 			sql.append(", ?");
-
 			sql.append(")");
 
 			ps = connection.prepareStatement(sql.toString());
@@ -154,7 +153,6 @@ public class UserDao {
 			ps.setString(1, user.getAccount());
 			ps.setString(2, user.getName());
 			ps.setInt(3, user.getBranchId());
-			//ps.setInt(3, 1);
 			ps.setString(4, user.getPassword());
 			ps.setInt(5, user.getDivisionId());
 			ps.setInt(6, 0);
@@ -403,7 +401,6 @@ public class UserDao {
 		}
 
 	}
-
 
 }
 
